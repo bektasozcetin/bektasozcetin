@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 48" width="180" height="48" fill="#111">
+  <rect x="4.5" y="7.5" width="33" height="33" rx="9" fill="none" stroke="#111" stroke-width="3.4"/>
+  <path d="M14 32V16l14 16V16" fill="none" stroke="#111" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="50" y="30" font-family="Verdana, Geneva, sans-serif" font-weight="700" font-size="22" letter-spacing="-0.5">nexa</text>
+  <text x="51" y="42" font-family="Verdana, Geneva, sans-serif" font-size="8.5" letter-spacing="2.6">DİJİTAL</text>
+</svg>

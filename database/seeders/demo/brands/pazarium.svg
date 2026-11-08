@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 178 48" width="178" height="48" fill="#111">
+  <path d="M8 17h26l-2.4 24H10.4z" fill="none" stroke="#111" stroke-width="3.4" stroke-linejoin="round"/>
+  <path d="M14.5 19v-6a6.5 6.5 0 0 1 13 0v6" fill="none" stroke="#111" stroke-width="3.4" stroke-linecap="round"/>
+  <path d="M15.5 28.5c3 3.6 8 3.6 11 0" fill="none" stroke="#111" stroke-width="3.2" stroke-linecap="round"/>
+  <text x="44" y="33" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="25" letter-spacing="-0.8">Pazarium</text>
+</svg>

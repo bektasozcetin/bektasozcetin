@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" width="200" height="48" fill="#111">
+  <path d="M20 4l16 9v20l-16 9-16-9V13z" fill="none" stroke="#111" stroke-width="3.4" stroke-linejoin="round"/>
+  <path d="M13 31l7-15 7 15M15.6 26h8.8" fill="none" stroke="#111" stroke-width="3.2" stroke-linejoin="round"/>
+  <text x="46" y="27" font-family="Arial Black, Arial, Helvetica, sans-serif" font-weight="900" font-size="20" letter-spacing="3">ARKON</text>
+  <text x="47" y="40" font-family="Arial, Helvetica, sans-serif" font-size="9" letter-spacing="4.2">ENDÜSTRİ</text>
+</svg>

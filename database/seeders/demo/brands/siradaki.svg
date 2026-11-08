@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 48" width="170" height="48" fill="#111">
+  <circle cx="21" cy="24" r="17" fill="none" stroke="#111" stroke-width="3.4"/>
+  <path d="M21 14v10l7 5" fill="none" stroke="#111" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="37" cy="10" r="5" fill="#111"/>
+  <text x="48" y="32" font-family="'Segoe UI', Arial, Helvetica, sans-serif" font-weight="600" font-size="24" letter-spacing="-0.4">sıradaki</text>
+</svg>
