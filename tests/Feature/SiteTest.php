@@ -92,7 +92,7 @@ class SiteTest extends TestCase
         $this->actingAs($admin);
 
         $this->get('/admin')->assertOk();
-        foreach (['brands', 'projects', 'services', 'repositories', 'experiences', 'educations', 'pricing-plans', 'testimonials', 'faqs', 'contact-messages', 'posts', 'meetings', 'ayarlar'] as $resource) {
+        foreach (['brands', 'projects', 'services', 'repositories', 'experiences', 'educations', 'pricing-plans', 'testimonials', 'faqs', 'contact-messages', 'posts', 'meetings', 'ayarlar', 'skills'] as $resource) {
             $this->get("/admin/{$resource}")->assertOk();
         }
         $models = [
@@ -196,5 +196,43 @@ class SiteTest extends TestCase
             ->set('data.email', 'admin@example.test')->set('data.password', 'dogru-sifre')
             ->call('authenticate')->assertRedirect('/admin');
         $this->assertAuthenticated();
+    }
+
+    public function test_skills_stack_on_home_page(): void
+    {
+        $this->get('/')->assertOk()->assertSee('Teknoloji')->assertSee('PHP 8.3')->assertSee('aria-valuenow="95"', false);
+        \App\Models\Skill::where('name', 'Figma')->update(['is_published' => false]);
+        $this->get('/')->assertDontSee('Figma');
+        $this->get('/en')->assertSee('Tech')->assertSee('Core expertise');
+    }
+
+    public function test_github_sync_updates_and_adds_repositories(): void
+    {
+        \Illuminate\Support\Facades\Http::fake([
+            'api.github.com/users/ornek/repos*' => \Illuminate\Support\Facades\Http::response([
+                ['id' => 1, 'full_name' => 'bektasozcetin/laravel-iyzico', 'html_url' => 'https://github.com/bektasozcetin/laravel-iyzico', 'description' => 'GitHub açıklaması', 'language' => 'PHP', 'stargazers_count' => 300, 'forks_count' => 41, 'topics' => ['laravel'], 'pushed_at' => '2026-11-01T10:00:00Z', 'fork' => false, 'archived' => false, 'private' => false],
+                ['id' => 2, 'full_name' => 'bektasozcetin/yeni-paket', 'html_url' => 'https://github.com/bektasozcetin/yeni-paket', 'description' => 'Yeni bir paket', 'language' => 'Blade', 'stargazers_count' => 3, 'forks_count' => 0, 'topics' => [], 'pushed_at' => '2026-11-05T10:00:00Z', 'fork' => false, 'archived' => false, 'private' => false],
+                ['id' => 3, 'full_name' => 'bektasozcetin/fork-edilmis', 'html_url' => 'https://github.com/x', 'description' => null, 'language' => null, 'stargazers_count' => 0, 'forks_count' => 0, 'pushed_at' => null, 'fork' => true, 'archived' => false, 'private' => false],
+            ]),
+        ]);
+        Setting::put(['github_username' => 'ornek']);
+
+        $result = \App\Support\GitHubSync::run();
+        $this->assertSame(['created' => 1, 'updated' => 1, 'skipped' => 1], $result);
+
+        $existing = \App\Models\Repository::where('name', 'bektasozcetin/laravel-iyzico')->first();
+        $this->assertSame(300, $existing->stars);
+        $this->assertSame(41, $existing->forks);
+        $this->assertStringContainsString('iyzico', $existing->description['tr']); // elle yazılan açıklama korunur
+        $this->assertTrue($existing->is_published);
+
+        $new = \App\Models\Repository::where('name', 'bektasozcetin/yeni-paket')->first();
+        $this->assertFalse($new->is_published); // yeni repolar gizli gelir
+        $this->get('/')->assertSee('300')->assertDontSee('bektasozcetin/yeni-paket');
+
+        Setting::put(['github_username' => null]);
+        config(['site.social.GitHub' => null]);
+        $this->expectException(\RuntimeException::class);
+        \App\Support\GitHubSync::run();
     }
 }

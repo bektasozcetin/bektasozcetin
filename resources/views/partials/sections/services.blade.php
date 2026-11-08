@@ -141,6 +141,36 @@
             </div>
         </article>
     </div>
+
+    @if ($skills->isNotEmpty())
+        <div class="card spot reveal relative flex flex-col gap-8 overflow-hidden rounded-[32px] p-[clamp(22px,3vw,36px)]">
+            <div aria-hidden="true" class="pointer-events-none absolute -bottom-40 -left-24 h-[380px] w-[380px] rounded-full bg-[radial-gradient(circle,var(--vg),transparent_65%)] opacity-60 blur-[30px]"></div>
+            <div class="relative flex flex-wrap items-end justify-between gap-4">
+                <div class="flex flex-col gap-2">
+                    <h3 class="h3 text-[26px]">{{ __('site.skills.stack_a') }} <span class="serif text-[1.15em] font-normal text-c3">{{ __('site.skills.stack_b') }}</span></h3>
+                    <p class="m-0 max-w-[52ch] text-c4">{{ __('site.skills.stack_lede') }}</p>
+                </div>
+                <span class="chip inline-flex items-center gap-2"><span class="vdot live h-1.5 w-1.5"></span>{{ __('site.skills.legend') }}</span>
+            </div>
+            <div class="relative grid grid-cols-[repeat(auto-fill,minmax(min(100%,250px),1fr))] gap-x-10 gap-y-8">
+                @foreach (['backend', 'frontend', 'data', 'devops', 'tools'] as $group)
+                    @continue(! $skills->has($group))
+                    <div class="flex flex-col gap-3.5">
+                        <span class="lbl flex items-center justify-between border-b border-line pb-2.5"><span class="volt">{{ __('site.skills.groups.'.$group) }}</span><span>{{ $skills[$group]->count() }}</span></span>
+                        @foreach ($skills[$group] as $n => $skill)
+                            <div class="skill {{ $skill->is_core ? 'is-core' : '' }}" style="--lv: {{ $skill->level }}%; --dl: {{ $n * 70 }}ms">
+                                <div class="flex items-baseline justify-between gap-3">
+                                    <span class="flex items-center gap-2 text-[15px] font-medium text-c1">@if ($skill->is_core)<span class="vdot live h-1.5 w-1.5"></span>@endif{{ $skill->name }}</span>
+                                    <span class="font-mono text-[11.5px] text-c5">@if ($skill->years){{ __('site.skills.years', ['n' => $skill->years]) }} · @endif%{{ $skill->level }}</span>
+                                </div>
+                                <span class="meter" role="meter" aria-valuenow="{{ $skill->level }}" aria-valuemin="0" aria-valuemax="100" aria-label="{{ $skill->name }} · {{ __('site.skills.level') }}"><i></i></span>
+                            </div>
+                        @endforeach
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
 </section>
 
 <section id="kod" class="flex flex-col gap-10" x-data="{ tab: 'action' }">

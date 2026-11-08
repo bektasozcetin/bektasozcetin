@@ -226,6 +226,239 @@
 .fi-page-content > :nth-child(3) { animation-delay: .12s; }
 @keyframes bk-rise { from { opacity: 0; transform: translateY(10px); } }
 
+/* =====================================================================
+   Cam katmanı ve animasyonlar
+   ===================================================================== */
+
+/* Arka planda yavaşça süzülen ışık küreleri */
+.fi-body.fi-panel-admin::after {
+    content: '';
+    position: fixed;
+    inset: -20%;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(28% 32% at 18% 78%, rgba(47, 107, 255, 0.10), transparent 70%),
+        radial-gradient(22% 26% at 88% 62%, rgba(124, 92, 255, 0.07), transparent 70%);
+    animation: bk-orbs 26s ease-in-out infinite alternate;
+}
+.dark .fi-body.fi-panel-admin::after {
+    background:
+        radial-gradient(28% 32% at 18% 78%, rgba(47, 107, 255, 0.16), transparent 70%),
+        radial-gradient(22% 26% at 88% 62%, rgba(124, 92, 255, 0.10), transparent 70%);
+}
+@keyframes bk-orbs { to { transform: translate3d(4%, -6%, 0) scale(1.08); } }
+
+/* Ortak cam yüzey */
+.fi-section,
+.fi-ta-ctn,
+.fi-wi-stats-overview-stat,
+.bk-welcome,
+.fi-fo-repeater-item,
+.fi-fo-builder-item {
+    position: relative;
+    isolation: isolate;
+    backdrop-filter: blur(20px) saturate(1.4);
+}
+.dark .fi-section,
+.dark .fi-ta-ctn,
+.dark .fi-wi-stats-overview-stat,
+.dark .fi-fo-repeater-item {
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.015) 45%, rgba(255, 255, 255, 0.03));
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), inset 0 0 0 1px rgba(255, 255, 255, 0.02), 0 30px 80px -40px rgba(0, 0, 0, 0.9);
+}
+:root:not(.dark) .fi-section,
+:root:not(.dark) .fi-ta-ctn,
+:root:not(.dark) .fi-wi-stats-overview-stat {
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.7));
+}
+
+/* Fareyi izleyen ışık + üst kenarda ince parıltı */
+.bk-glow::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .45s;
+    background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 0%), rgba(91, 140, 255, 0.13), transparent 55%);
+}
+.bk-glow:hover::before { opacity: 1; }
+.fi-section::after,
+.fi-ta-ctn::after,
+.fi-wi-stats-overview-stat::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 12%;
+    right: 12%;
+    height: 1px;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent, rgba(140, 175, 255, 0.55), transparent);
+    opacity: .55;
+}
+
+/* Kartlarda dolaşan kenar ışığı (yalnızca üzerine gelince) */
+@property --bk-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+.fi-wi-stats-overview-stat::after,
+.bk-welcome-edge {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    pointer-events: none;
+    background: conic-gradient(from var(--bk-angle), transparent 0deg, rgba(91, 140, 255, 0.85) 50deg, transparent 110deg, transparent 360deg);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity .4s;
+    animation: bk-orbit 4s linear infinite;
+    width: auto;
+    height: auto;
+    right: 0;
+    top: 0;
+}
+.fi-wi-stats-overview-stat:hover::after { opacity: 1; }
+.bk-welcome-edge { opacity: .9; animation-duration: 7s; }
+@keyframes bk-orbit { to { --bk-angle: 360deg; } }
+
+/* İstatistik kartı: köşedeki mavi küre */
+.fi-wi-stats-overview-stat .fi-wi-stats-overview-stat-content { position: relative; }
+.fi-wi-stats-overview-stat .fi-wi-stats-overview-stat-content::after { content: ''; position: absolute; width: 160px; height: 160px; right: -60px; top: -70px; border-radius: 999px; background: radial-gradient(circle, rgba(47, 107, 255, 0.16), transparent 65%); pointer-events: none; z-index: -1; }
+.fi-wi-stats-overview-stat-value { font-variant-numeric: tabular-nums; }
+
+/* ---------- Kenar çubuğu animasyonları ---------- */
+.fi-sidebar { background: color-mix(in srgb, var(--bk-sidebar) 82%, transparent); backdrop-filter: blur(24px) saturate(1.3); }
+.fi-sidebar-item { animation: bk-slide-in .55s cubic-bezier(.16, 1, .3, 1) both; }
+.fi-sidebar-group:nth-child(1) .fi-sidebar-item { animation-delay: .04s; }
+.fi-sidebar-group:nth-child(2) .fi-sidebar-item { animation-delay: .1s; }
+.fi-sidebar-group:nth-child(3) .fi-sidebar-item { animation-delay: .16s; }
+.fi-sidebar-group:nth-child(4) .fi-sidebar-item { animation-delay: .22s; }
+@keyframes bk-slide-in { from { opacity: 0; transform: translateX(-10px); } }
+.fi-sidebar-item-icon { transition: transform .35s cubic-bezier(.16, 1, .3, 1), color .25s; }
+.fi-sidebar-item-btn:hover .fi-sidebar-item-icon { transform: translateX(2px) scale(1.08); color: var(--bk-v2); }
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn { background: linear-gradient(90deg, rgba(47, 107, 255, 0.18), rgba(47, 107, 255, 0.04)); box-shadow: inset 0 0 0 1px rgba(91, 140, 255, 0.18); }
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn::before { animation: bk-grow .6s cubic-bezier(.16, 1, .3, 1) both; }
+@keyframes bk-grow { from { height: 0; opacity: 0; } }
+
+/* ---------- Üst çubuk: alt kenarda akan ışık ---------- */
+.fi-topbar { position: relative; }
+.fi-topbar::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent 0%, rgba(91, 140, 255, 0) 30%, rgba(91, 140, 255, 0.8) 50%, rgba(91, 140, 255, 0) 70%, transparent 100%);
+    background-size: 200% 100%;
+    animation: bk-flow 7s linear infinite;
+}
+@keyframes bk-flow { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+
+/* ---------- Sayfa başlığı: maskeden yükselir ---------- */
+.fi-header-heading { animation: bk-rise-mask .9s cubic-bezier(.16, 1, .3, 1) both; }
+.fi-header-actions-ctn { animation: bk-fade .7s ease .15s both; }
+.fi-breadcrumbs { animation: bk-fade .6s ease both; }
+@keyframes bk-rise-mask { from { opacity: 0; transform: translateY(14px); filter: blur(4px); } }
+@keyframes bk-fade { from { opacity: 0; } }
+
+/* ---------- Tablo satırları sırayla belirir ---------- */
+.fi-ta-row { animation: bk-row .5s cubic-bezier(.16, 1, .3, 1) both; }
+.fi-ta-row:nth-child(2) { animation-delay: .03s; } .fi-ta-row:nth-child(3) { animation-delay: .06s; }
+.fi-ta-row:nth-child(4) { animation-delay: .09s; } .fi-ta-row:nth-child(5) { animation-delay: .12s; }
+.fi-ta-row:nth-child(6) { animation-delay: .15s; } .fi-ta-row:nth-child(7) { animation-delay: .18s; }
+.fi-ta-row:nth-child(8) { animation-delay: .21s; } .fi-ta-row:nth-child(n+9) { animation-delay: .24s; }
+@keyframes bk-row { from { opacity: 0; transform: translateY(6px); } }
+.fi-ta-row:hover { background: linear-gradient(90deg, rgba(47, 107, 255, 0.07), transparent 60%); }
+.fi-ta-image img { transition: transform .4s cubic-bezier(.16, 1, .3, 1); }
+.fi-ta-row:hover .fi-ta-image img { transform: scale(1.08); }
+
+/* ---------- Form alanları: cam + odak ışığı ---------- */
+.fi-input-wrp,
+.fi-fo-tags-input-wrp,
+.fi-select-input,
+.fi-fo-markdown-editor,
+.fi-fo-rich-editor {
+    backdrop-filter: blur(12px);
+    transition: box-shadow .35s, background .35s, border-color .35s, transform .35s;
+}
+.dark .fi-input-wrp { background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.02)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04); }
+:root:not(.dark) .fi-input-wrp { background: rgba(255, 255, 255, 0.85); }
+.fi-input-wrp:hover:not(:focus-within) { box-shadow: 0 0 0 1px rgba(91, 140, 255, 0.25); }
+.fi-input-wrp:focus-within { box-shadow: 0 0 0 1px var(--bk-v2), 0 0 0 5px var(--bk-vf), 0 10px 30px -12px rgba(47, 107, 255, 0.5); animation: bk-focus .5s ease-out; }
+@keyframes bk-focus { from { box-shadow: 0 0 0 1px var(--bk-v2), 0 0 0 0 rgba(47, 107, 255, 0.5); } }
+.fi-fo-field-label-content { transition: color .3s; }
+.fi-fo-field:focus-within .fi-fo-field-label-content { color: var(--bk-v2); }
+.fi-input::placeholder { transition: opacity .3s, transform .3s; }
+.fi-input:focus::placeholder { opacity: .5; }
+
+/* Anahtar, onay kutusu, radyo */
+.fi-toggle { transition: background .35s, box-shadow .35s; }
+.fi-toggle.fi-toggle-on, .fi-toggle[aria-checked="true"] { box-shadow: 0 0 0 4px var(--bk-vf), 0 0 18px -2px rgba(47, 107, 255, 0.6); }
+.fi-checkbox-input, .fi-radio-input { transition: transform .25s cubic-bezier(.34, 1.56, .64, 1), box-shadow .25s, background-color .25s; }
+.fi-checkbox-input:checked, .fi-radio-input:checked { animation: bk-pop .35s cubic-bezier(.34, 1.56, .64, 1); box-shadow: 0 0 0 4px var(--bk-vf); }
+@keyframes bk-pop { 50% { transform: scale(1.18); } }
+
+/* Etiket girişindeki etiketler */
+.fi-fo-tags-input-tags-ctn .fi-badge { animation: bk-pop .35s cubic-bezier(.34, 1.56, .64, 1); }
+
+/* Dosya yükleme alanı */
+.fi-fo-file-upload .filepond--panel-root { background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(140, 150, 170, 0.35); }
+.fi-fo-file-upload:hover .filepond--panel-root { border-color: var(--bk-v2); background: rgba(47, 107, 255, 0.05); }
+.fi-fo-file-upload .filepond--item-panel { border-radius: 14px; }
+
+/* Kaydırıcı (yetenek seviyesi) */
+.fi-fo-slider .noUi-connect { background: linear-gradient(90deg, var(--bk-v), var(--bk-v2)); box-shadow: 0 0 14px rgba(47, 107, 255, 0.6); }
+.fi-fo-slider .noUi-handle { border-radius: 999px; box-shadow: 0 0 0 4px var(--bk-vf), 0 6px 18px -6px rgba(0, 0, 0, 0.6); }
+
+/* ---------- Düğmeler: parlama + basma ---------- */
+.fi-btn { position: relative; overflow: hidden; isolation: isolate; }
+.fi-btn::after { content: ''; position: absolute; top: 0; bottom: 0; left: -70%; width: 45%; z-index: -1; pointer-events: none; background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.28), transparent); transform: skewX(-18deg); transition: left .8s cubic-bezier(.16, 1, .3, 1); }
+.fi-btn:hover::after { left: 130%; }
+.fi-btn:active { transform: scale(.97); }
+.fi-btn.fi-color-gray, .fi-btn:not(.fi-color-primary):not(.fi-color-danger):not(.fi-color-success):not(.fi-color-warning) { backdrop-filter: blur(10px); }
+.fi-btn.fi-color-danger:not(.fi-outlined) { box-shadow: 0 10px 26px -14px rgba(239, 68, 68, 0.85); }
+
+/* ---------- Sekmeler: kayan seçili alan ---------- */
+.fi-tabs { padding: 4px; background: var(--bk-surface-2); border: 1px solid var(--bk-line-soft); backdrop-filter: blur(12px); }
+.fi-tabs-item { transition: background .35s, color .35s; }
+.fi-tabs-item.fi-active { background: linear-gradient(180deg, rgba(47, 107, 255, 0.22), rgba(47, 107, 255, 0.1)); box-shadow: inset 0 0 0 1px rgba(91, 140, 255, 0.25); }
+
+/* ---------- Pencereler, menüler, bildirimler ---------- */
+.fi-modal-window { backdrop-filter: blur(24px) saturate(1.3); animation: bk-modal .45s cubic-bezier(.16, 1, .3, 1); }
+.dark .fi-modal-window { background: linear-gradient(160deg, rgba(30, 32, 38, 0.92), rgba(18, 19, 23, 0.94)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 40px 100px -30px rgba(0, 0, 0, 0.9); }
+@keyframes bk-modal { from { opacity: 0; transform: translateY(12px) scale(.97); } }
+.fi-dropdown-panel { animation: bk-drop .3s cubic-bezier(.16, 1, .3, 1); transform-origin: top; }
+@keyframes bk-drop { from { opacity: 0; transform: translateY(-6px) scale(.98); } }
+.fi-dropdown-list-item { border-radius: 12px; transition: background .2s, padding .25s; }
+.fi-no-notification { backdrop-filter: blur(20px) saturate(1.3); }
+.dark .fi-no-notification { background: rgba(24, 25, 30, 0.88); border: 1px solid rgba(255, 255, 255, 0.1); }
+
+/* ---------- Rozetler ---------- */
+.fi-badge { transition: transform .25s; }
+.fi-ta-row:hover .fi-badge { transform: translateY(-1px); }
+
+/* ---------- Yetenek seviyesi sütunu ---------- */
+.bk-level { display: flex; align-items: center; gap: 12px; min-width: 180px; }
+.bk-level-track { position: relative; flex: 1; height: 6px; border-radius: 999px; overflow: hidden; background: rgba(140, 150, 170, 0.18); }
+.bk-level-track i { position: absolute; inset: 0 auto 0 0; width: var(--lv); border-radius: inherit; background: linear-gradient(90deg, var(--bk-v), var(--bk-v2)); box-shadow: 0 0 12px rgba(47, 107, 255, 0.55); animation: bk-fill 1.1s cubic-bezier(.16, 1, .3, 1) both; transform-origin: left; }
+@keyframes bk-fill { from { transform: scaleX(0); } }
+.bk-level-num { width: 42px; font: 500 12px var(--bk-mono); color: var(--bk-muted); text-align: right; }
+
+/* ---------- Boş durumlar ---------- */
+.fi-ta-empty-state-icon-bg, .fi-empty-state-icon-bg { background: radial-gradient(circle, rgba(47, 107, 255, 0.2), transparent 70%); animation: bk-breathe 3.2s ease-in-out infinite; }
+@keyframes bk-breathe { 50% { transform: scale(1.08); } }
+
+/* ---------- Yükleme göstergesi ---------- */
+.fi-loading-indicator { color: var(--bk-v2); }
+
 @media (prefers-reduced-motion: reduce) {
-    .fi-body *, .fi-body *::before, .fi-body *::after { animation: none !important; }
+    .fi-body *, .fi-body *::before, .fi-body *::after { animation: none !important; transition: none !important; }
 }

@@ -37,6 +37,7 @@ return [
     'brands' => ['label' => 'Brands I\'ve worked with', 'count' => ':count brands over the last 6 years'],
 
     'projects' => [
+        'forks' => 'forks', 'updated' => 'updated :time', 'from_github' => 'Live from GitHub',
         'eyebrow' => '01 · Case studies', 'title_a' => 'Selected', 'title_b' => 'work',
         'lede' => 'For each project I explain the problem, the technical decisions I made and the result. Open one to read the full story.',
         'filter_label' => 'Filter projects',
@@ -61,6 +62,9 @@ return [
     ],
 
     'skills' => [
+        'stack_a' => 'Tech', 'stack_b' => 'stack', 'stack_lede' => 'The tools I use every day, and how deeply I know them.',
+        'years' => ':n yrs', 'groups' => ['backend' => 'Backend', 'frontend' => 'Frontend', 'data' => 'Data', 'devops' => 'DevOps', 'tools' => 'Tools'],
+        'legend' => 'Core expertise', 'level' => 'Level',
         'eyebrow' => '03 · Skills', 'title_a' => 'Craft at', 'title_b' => 'every layer',
         'lede' => 'Tested, maintainable code that runs in production. From backend to interface, database to server.',
         'core' => 'Core expertise', 'db' => 'Database',

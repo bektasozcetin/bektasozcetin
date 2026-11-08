@@ -24,16 +24,19 @@ Bektaş Özçetin'in kişisel portfolyo sitesi: iki dilli (TR/EN), içeriği tam
 - **İletişim formu:** Sunucu ve tarayıcı doğrulaması, bot tuzağı, hız sınırı (dakikada 3, saatte 10). Mesajlar veritabanına kaydedilir ve e-postayla bildirilir.
 - **Paylaşım görselleri:** Ana sayfa, proje ve not sayfaları için 1200×630 Open Graph görselleri GD ile otomatik üretilir.
 - **CV indirme:** Türkçe ve İngilizce PDF, panelden yüklenir.
+- **Teknoloji yığını:** Gruplara ayrılmış yetenekler; seviye çubukları kaydırınca dolar, ana uzmanlıklar vurgulanır.
+- **Açık kaynak:** Repolar GitHub'dan eşitlenir; dil, yıldız, fork ve son güncelleme bilgisi kartlarda görünür.
 - **Koyu/açık tema**, komut paleti (Ctrl/⌘ + K), kaydırınca beliren animasyonlar, mobil uyum ve erişilebilirlik (klavye, odak yönetimi, `prefers-reduced-motion`).
 - **İstatistik:** Proje ve not görüntülenmeleri kişisel veri tutmadan sayılır. İsteğe bağlı olarak Plausible (çerezsiz) ya da Google Analytics 4 (onay bandıyla) bağlanır.
 
 ### Yönetim paneli (`/admin`)
-- Projeler (galeri dahil), notlar, hizmetler, açık kaynak, deneyim, eğitim, fiyatlar, referanslar, SSS ve markalar.
+- Projeler (galeri dahil), notlar, yetenekler (seviye kaydırıcısıyla), hizmetler, açık kaynak, deneyim, eğitim, fiyatlar, referanslar, SSS ve markalar.
+- **GitHub eşitleme:** Açık Kaynak sayfasındaki "GitHub'dan eşitle" butonu açık repoları çeker; yeni repolar gizli eklenir, elle yazılan açıklamalar korunur. Her gece 03:30'da otomatik tazelenir.
 - Çevrilebilir alanlar Türkçe/English sekmeleriyle düzenlenir; İngilizce boş kalırsa sitede Türkçe gösterilir.
 - **Gelen kutusu:** görüşme takvimi (onayla / iptal et) ve iletişim mesajları (okundu takibi, yanıtla).
 - **Site ayarları:** CV dosyaları, görüşme günleri ve saatleri, istatistik servisi.
 - Ana sayfada özet istatistikler ve en çok bakılan projeler.
-- Sitenin tasarımıyla uyumlu tema (`resources/css/filament/admin/theme.css`): grafit + mavi palet, koyu/açık mod, cam efektli üst çubuk.
+- Sitenin tasarımıyla uyumlu cam tema (`resources/css/filament/admin/theme.css`): grafit + mavi palet, koyu/açık mod, fareyi izleyen ışık, kenarında dolaşan ışıklar, sırayla beliren tablo satırları, sayarak gelen istatistikler, odakta parlayan form alanları.
 - Pano: karşılama kartı (günün özeti ve hızlı eylemler), istatistikler, yaklaşan görüşmeler, en çok bakılan projeler.
 - Animasyonlu, sitenin görünümünde giriş sayfası.
 
@@ -73,6 +76,8 @@ Site: <http://127.0.0.1:8000> · Panel: <http://127.0.0.1:8000/admin>
 
 Geliştirirken `npm run dev` ile CSS/JS değişiklikleri anında yansır.
 
+Gece GitHub eşitlemesi için zamanlayıcıyı çalıştır: yerelde `php artisan schedule:work`, sunucuda cron'a `* * * * * php /yol/artisan schedule:run`.
+
 ## Ortam değişkenleri
 
 | Değişken | Açıklama |
@@ -93,7 +98,8 @@ Geliştirirken `npm run dev` ile CSS/JS değişiklikleri anında yansır.
 |---|---|
 | Projeler, notlar, hizmetler, deneyim, fiyatlar, referanslar, SSS, markalar | Panel → İçerik |
 | Görüşme talepleri ve iletişim mesajları | Panel → Gelen kutusu |
-| CV, görüşme takvimi, istatistik servisi | Panel → Ayarlar → Site ayarları |
+| Yetenekler (teknoloji yığını) | Panel → İçerik → Yetenekler |
+| GitHub kullanıcı adı, CV, görüşme takvimi, istatistik servisi | Panel → Ayarlar → Site ayarları |
 | E-posta, şehir, sosyal hesaplar | `.env` (`SITE_*`) → `config/site.php` |
 | Başlıklar, menü, ilkeler, form metinleri, KVKK metni | `lang/tr/site.php`, `lang/en/site.php` |
 | Kod vitrini örnekleri | `config/showcase.php` |
@@ -107,7 +113,7 @@ app/
   Filament/            Panel kaynakları, pano, Site ayarları, özel giriş sayfası, widget'lar
   Http/Controllers/    Ana sayfa, proje, not, iletişim, görüşme, sitemap, RSS
   Models/              Project, Post, Meeting, Setting, ... (Concerns/HasTranslations)
-  Support/             OgImage (paylaşım görselleri), BookingCalendar, CountsViews
+  Support/             OgImage (paylaşım görselleri), BookingCalendar, CountsViews, GitHubSync
 database/seeders/      Demo içerik (demo/ klasöründe görseller, galeri ve örnek CV'ler)
 lang/{tr,en}/site.php  Sitedeki sabit metinler
 resources/
@@ -126,7 +132,7 @@ tests/Feature/         Uçtan uca testler
 php artisan test
 ```
 
-11 test şunları kontrol eder:
+13 test şunları kontrol eder:
 - Herkese açık sayfaların iki dilde açılması
 - Yayından kaldırılan projelerin gizlenmesi
 - İletişim formu: kayıt, e-posta, doğrulama, bot tuzağı
@@ -134,6 +140,7 @@ php artisan test
 - Galeri, "sonraki proje" ve görüntülenme sayacı (botlar ve tekrarlar sayılmaz)
 - CV bağlantıları
 - Görüşme takvimi: dolu saat, geçersiz saat, KVKK onayı, bot tuzağı, hız sınırı
+- Teknoloji yığını ve GitHub eşitleme (sahte GitHub yanıtıyla)
 - Özel giriş sayfası ve tüm panel sayfaları
 
 ## Yayından önce

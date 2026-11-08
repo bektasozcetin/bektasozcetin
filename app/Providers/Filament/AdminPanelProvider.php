@@ -56,6 +56,7 @@ class AdminPanelProvider extends PanelProvider
             ->sidebarCollapsibleOnDesktop()
             ->renderHook(PanelsRenderHook::HEAD_END, fn () => view('filament.hooks.head'))
             ->renderHook(PanelsRenderHook::USER_MENU_BEFORE, fn () => view('filament.hooks.site-link'))
+            ->renderHook(PanelsRenderHook::BODY_END, fn () => view('filament.hooks.scripts'))
             ->navigationGroups(['Gelen kutusu', 'İçerik', 'Ayarlar'])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')

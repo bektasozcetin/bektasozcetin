@@ -18,6 +18,7 @@ class RepositoryForm
                 TextInput::make('language')->label('Dil')->default('PHP'),
                 TextInput::make('url')->label('GitHub adresi')->url(),
                 TextInput::make('stars')->label('Yıldız sayısı')->numeric(),
+                TextInput::make('forks')->label('Fork sayısı')->numeric(),
                 TextInput::make('sort')->label('Sıra')->numeric()->default(0),
                 Toggle::make('is_published')->label('Yayında')->default(true),
             ]),

@@ -37,6 +37,7 @@ return [
     'brands' => ['label' => 'Birlikte çalıştığım markalar', 'count' => ':count marka, son 6 yılda'],
 
     'projects' => [
+        'forks' => 'fork', 'updated' => ':time güncellendi', 'from_github' => 'GitHub\'dan canlı',
         'eyebrow' => '01 · Vaka çalışmaları', 'title_a' => 'Seçili', 'title_b' => 'projeler',
         'lede' => 'Her projede sorunu, verdiğim teknik kararları ve sonucu anlattım. Bir projeye tıkla, hikâyenin tamamını oku.',
         'filter_label' => 'Projeleri filtrele',
@@ -61,6 +62,9 @@ return [
     ],
 
     'skills' => [
+        'stack_a' => 'Teknoloji', 'stack_b' => 'yığını', 'stack_lede' => 'Günlük kullandığım araçlar ve ne kadar derinlemesine bildiğim.',
+        'years' => ':n yıl', 'groups' => ['backend' => 'Backend', 'frontend' => 'Frontend', 'data' => 'Veri', 'devops' => 'DevOps', 'tools' => 'Araçlar'],
+        'legend' => 'Ana uzmanlık', 'level' => 'Seviye',
         'eyebrow' => '03 · Yetkinlikler', 'title_a' => 'Her katmanda', 'title_b' => 'ustalık',
         'lede' => 'Üretimde çalışan, test edilmiş ve bakımı kolay kod. Backend\'den arayüze, veritabanından sunucuya.',
         'core' => 'Ana uzmanlık', 'db' => 'Veritabanı',

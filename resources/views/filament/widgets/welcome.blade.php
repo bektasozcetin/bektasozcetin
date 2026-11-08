@@ -1,5 +1,6 @@
 <x-filament-widgets::widget>
-    <div class="bk-welcome">
+    <div class="bk-welcome bk-glow">
+        <span class="bk-welcome-edge" aria-hidden="true"></span>
         <div class="bk-welcome-main">
             <span class="bk-eyebrow"><i></i>{{ $date }}</span>
             <h2 class="bk-welcome-title">{{ $greeting }}@if ($name), <span class="bk-serif">{{ $name }}.</span>@else.@endif</h2>

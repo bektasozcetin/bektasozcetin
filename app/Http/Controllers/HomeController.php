@@ -11,6 +11,7 @@ use App\Models\PricingPlan;
 use App\Models\Project;
 use App\Models\Repository;
 use App\Models\Service;
+use App\Models\Skill;
 use App\Models\Testimonial;
 use Illuminate\View\View;
 
@@ -27,6 +28,7 @@ class HomeController extends Controller
             'brands' => Brand::published()->get(),
             'repositories' => Repository::where('is_published', true)->ordered()->get(),
             'services' => Service::where('is_published', true)->ordered()->get(),
+            'skills' => Skill::published()->get()->groupBy('group'),
             'experiences' => Experience::ordered()->get(),
             'educations' => Education::ordered()->get(),
             'plans' => PricingPlan::ordered()->get(),

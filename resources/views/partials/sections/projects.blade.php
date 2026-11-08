@@ -89,10 +89,11 @@
                     <{{ $tag }} class="card spot flex flex-col gap-3 rounded-[22px] p-5 no-underline" @if ($repo->url) href="{{ $repo->url }}" target="_blank" rel="noopener" @endif>
                         <span class="flex items-center gap-2.5 font-mono text-sm font-medium text-c0"><x-ico name="file" :size="18" :stroke="1.8" class="volt" />{{ $repo->name }}</span>
                         <span class="text-sm text-c4">{{ $repo->t('description') }}</span>
-                        <span class="flex gap-3.5 font-mono text-xs text-c5">
-                            <span>● {{ $repo->language }}</span>
-                            @if ($repo->stars !== null)<span>★ {{ $repo->stars }} {{ __('site.projects.stars') }}</span>@endif
-                            <span>{{ $repo->t('kind') }}</span>
+                        <span class="mt-auto flex flex-wrap gap-x-3.5 gap-y-1.5 font-mono text-xs text-c5">
+                            <span class="inline-flex items-center gap-1.5"><span class="lang-dot" style="--c: {{ ['PHP' => '#7A86B8', 'Blade' => '#F7523F', 'JavaScript' => '#F1E05A', 'TypeScript' => '#3178C6', 'Vue' => '#41B883', 'CSS' => '#663399', 'Shell' => '#89E051', 'Go' => '#00ADD8', 'Python' => '#3572A5'][$repo->language] ?? '#9A9DA6' }}"></span>{{ $repo->language }}</span>
+                            @if ($repo->stars !== null)<span>★ {{ $repo->stars }}</span>@endif
+                            @if ($repo->forks)<span>⑂ {{ $repo->forks }} {{ __('site.projects.forks') }}</span>@endif
+                            @if ($repo->pushed_at)<span>{{ __('site.projects.updated', ['time' => $repo->pushed_at->locale(app()->getLocale())->diffForHumans()]) }}</span>@else<span>{{ $repo->t('kind') }}</span>@endif
                         </span>
                     </{{ $tag }}>
                 @endforeach

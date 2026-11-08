@@ -160,7 +160,7 @@ class OgImage
         foreach (preg_split('/\s+/u', trim($text)) as $word) {
             $try = $line === '' ? $word : "{$line} {$word}";
             $box = imagettfbbox($size, 0, $font, $try);
-            if ($box[2] - $box[0] > $maxWidth && $line !== '') {
+            if ($maxWidth < $box[2] - $box[0] && $line !== '') {
                 $lines[] = $line;
                 $line = $word;
             } else {

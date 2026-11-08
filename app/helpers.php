@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Setting;
+
 /*
 | Çok dilli route yardımcıları.
 | Türkçe route'lar önneksiz (home), İngilizceler "en." önekli (en.home).
@@ -33,7 +35,7 @@ if (! function_exists('setting')) {
     /** Panelden düzenlenen site ayarı. */
     function setting(string $key, mixed $default = null): mixed
     {
-        return \App\Models\Setting::get($key, $default);
+        return Setting::get($key, $default);
     }
 }
 

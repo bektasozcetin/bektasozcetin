@@ -67,6 +67,12 @@ class SiteSettings extends Page
                     ->helperText('Doldurursan site içi takvim yerine bu adres yeni sekmede açılır (Cal.com, Calendly…).'),
             ]),
 
+            Section::make('GitHub')->description('Panel → Açık Kaynak → "GitHub\'dan eşitle" ile repoların yıldız, fork ve güncellenme bilgisi çekilir; her gece otomatik tazelenir.')->schema([
+                TextInput::make('github_username')->label('GitHub kullanıcı adı')->placeholder('bektasozcetin')->prefix('github.com/')
+                    ->regex('/^[A-Za-z0-9-]{1,39}$/')
+                    ->helperText('Boş bırakırsan .env içindeki SITE_GITHUB_URL adresinden okunur.'),
+            ]),
+
             Section::make('Ziyaretçi istatistiği')->description('Proje ve notların okunma sayıları her zaman panelde tutulur. Ayrıntılı istatistik için bir servis bağlayabilirsin.')->columns(2)->schema([
                 Radio::make('analytics_provider')->label('Servis')->live()->columnSpanFull()->options([
                     'none' => 'Yok (yalnızca paneldeki sayaçlar)',

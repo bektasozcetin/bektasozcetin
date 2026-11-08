@@ -14,7 +14,7 @@ class Repository extends Model
 
     protected array $translatable = ['description', 'kind'];
 
-    protected $casts = ['is_published' => 'boolean'];
+    protected $casts = ['is_published' => 'boolean', 'topics' => 'array', 'pushed_at' => 'datetime'];
 
     public function scopeOrdered(Builder $query): Builder
     {

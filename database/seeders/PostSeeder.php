@@ -30,7 +30,7 @@ class PostSeeder extends Seeder
                     'en' => 'Actually getting rid of N+1 queries in Laravel',
                 ],
                 'excerpt' => [
-                    'tr' => "Bir sipariş listesi 214 sorguyla açılıyordu. with() eklemek işin yarısıydı; kalan yarısı, sorunun bir daha geri gelmemesini sağlamaktı.",
+                    'tr' => 'Bir sipariş listesi 214 sorguyla açılıyordu. with() eklemek işin yarısıydı; kalan yarısı, sorunun bir daha geri gelmemesini sağlamaktı.',
                     'en' => 'An order list was loading with 214 queries. Adding with() was half the job; the other half was making sure the problem never came back.',
                 ],
                 'body' => [

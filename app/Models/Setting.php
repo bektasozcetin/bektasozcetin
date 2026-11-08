@@ -34,6 +34,7 @@ class Setting extends Model
         'booking_duration' => 30,
         'booking_horizon' => 14,
         'booking_notice_hours' => 12,
+        'github_username' => null,
         'analytics_provider' => 'none',
         'plausible_domain' => null,
         'plausible_src' => 'https://plausible.io/js/script.js',

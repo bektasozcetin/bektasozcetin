@@ -12,6 +12,7 @@ use App\Models\Project;
 use App\Models\Repository;
 use App\Models\Service;
 use App\Models\Setting;
+use App\Models\Skill;
 use App\Models\Testimonial;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
@@ -32,6 +33,7 @@ class PortfolioSeeder extends Seeder
         $this->brands();
         $this->projects();
         $this->services();
+        $this->skills();
         $this->repositories();
         $this->experience();
         $this->pricing();
@@ -146,6 +148,25 @@ class PortfolioSeeder extends Seeder
         }
     }
 
+    /** Teknoloji yığını (panel → İçerik → Yetenekler). */
+    private function skills(): void
+    {
+        $rows = [
+            'backend' => [['PHP 8.3', 95, 7, true], ['Laravel', 95, 6, true], ['Livewire', 88, 4], ['Pest / PHPUnit', 85, 4], ['Queue & Horizon', 84, 4], ['Sanctum / API', 86, 5]],
+            'frontend' => [['Tailwind CSS', 92, 5, true], ['Alpine.js', 86, 4], ['Blade', 93, 6], ['Vue 3', 78, 3], ['Inertia', 76, 3]],
+            'data' => [['MySQL', 88, 6], ['PostgreSQL', 78, 3], ['Redis', 82, 4], ['Elasticsearch', 62, 2]],
+            'devops' => [['Docker', 78, 3], ['GitHub Actions', 84, 4], ['Laravel Forge', 86, 5], ['Nginx', 72, 4], ['AWS', 64, 2]],
+            'tools' => [['Filament', 92, 4, true], ['Git', 90, 7], ['Figma', 62, 3]],
+        ];
+        $sort = 0;
+        foreach ($rows as $group => $skills) {
+            foreach ($skills as $row) {
+                [$name, $level, $years] = $row;
+                Skill::create(['group' => $group, 'name' => $name, 'level' => $level, 'years' => $years, 'is_core' => $row[3] ?? false, 'sort' => $sort++]);
+            }
+        }
+    }
+
     private function repositories(): void
     {
         $t = fn ($tr, $en = null) => $this->t($tr, $en);
@@ -155,7 +176,7 @@ class PortfolioSeeder extends Seeder
             ['bektasozcetin/laravel-starter', $t('Roller, Pest testleri, GitHub Actions ve Docker hazır gelen başlangıç şablonu.', 'A starter kit that ships with roles, Pest tests, GitHub Actions and Docker.'), $t('Şablon', 'Template'), 58],
         ];
         foreach ($rows as $i => [$name, $desc, $kind, $stars]) {
-            Repository::create(['name' => $name, 'description' => $desc, 'kind' => $kind, 'stars' => $stars, 'sort' => $i]);
+            Repository::create(['name' => $name, 'description' => $desc, 'kind' => $kind, 'stars' => $stars, 'forks' => intdiv($stars, 7), 'pushed_at' => now()->subDays([3, 12, 27][$i] ?? 30), 'sort' => $i]);
         }
     }
 
