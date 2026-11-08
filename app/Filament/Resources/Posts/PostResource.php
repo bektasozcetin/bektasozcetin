@@ -67,7 +67,9 @@ class PostResource extends Resource
                 TextColumn::make('title')->label('Başlık')->getStateUsing(fn ($record) => $record->t('title'))->weight('bold')->wrap(),
                 TextColumn::make('status')->label('Durum')->badge()
                     ->getStateUsing(fn ($record) => $record->published_at === null ? 'Taslak' : ($record->isPublished() ? 'Yayında' : 'Zamanlandı'))
-                    ->color(fn ($state) => match ($state) { 'Yayında' => 'success', 'Zamanlandı' => 'warning', default => 'gray' }),
+                    ->color(fn ($state) => match ($state) {
+                        'Yayında' => 'success', 'Zamanlandı' => 'warning', default => 'gray'
+                    }),
                 TextColumn::make('published_at')->label('Tarih')->date('d.m.Y')->sortable(),
                 TextColumn::make('views')->label('Okunma')->numeric()->sortable(),
             ])

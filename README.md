@@ -10,6 +10,8 @@ Bektaş Özçetin'in kişisel portfolyo sitesi: iki dilli (TR/EN), içeriği tam
 |---|---|---|
 | ![Notlar](docs/notes.jpg) | ![Proje](docs/project.jpg) | ![Giriş](docs/login.jpg) |
 
+![Yönetim paneli](docs/panel.jpg)
+
 ---
 
 ## Özellikler
@@ -31,7 +33,9 @@ Bektaş Özçetin'in kişisel portfolyo sitesi: iki dilli (TR/EN), içeriği tam
 - **Gelen kutusu:** görüşme takvimi (onayla / iptal et) ve iletişim mesajları (okundu takibi, yanıtla).
 - **Site ayarları:** CV dosyaları, görüşme günleri ve saatleri, istatistik servisi.
 - Ana sayfada özet istatistikler ve en çok bakılan projeler.
-- Sitenin tasarımıyla uyumlu, animasyonlu giriş sayfası.
+- Sitenin tasarımıyla uyumlu tema (`resources/css/filament/admin/theme.css`): grafit + mavi palet, koyu/açık mod, cam efektli üst çubuk.
+- Pano: karşılama kartı (günün özeti ve hızlı eylemler), istatistikler, yaklaşan görüşmeler, en çok bakılan projeler.
+- Animasyonlu, sitenin görünümünde giriş sayfası.
 
 ## Kurulum
 
@@ -100,7 +104,7 @@ Geliştirirken `npm run dev` ile CSS/JS değişiklikleri anında yansır.
 
 ```
 app/
-  Filament/            Panel kaynakları, Site ayarları sayfası, özel giriş sayfası, panel widget'ları
+  Filament/            Panel kaynakları, pano, Site ayarları, özel giriş sayfası, widget'lar
   Http/Controllers/    Ana sayfa, proje, not, iletişim, görüşme, sitemap, RSS
   Models/              Project, Post, Meeting, Setting, ... (Concerns/HasTranslations)
   Support/             OgImage (paylaşım görselleri), BookingCalendar, CountsViews
@@ -109,6 +113,7 @@ lang/{tr,en}/site.php  Sitedeki sabit metinler
 resources/
   css/app.css          Tasarım token'ları ve bileşenler (Tailwind 4)
   css/admin-login.css  Panel giriş sayfası
+  css/filament/admin/  Panel teması
   js/app.js            Alpine bileşenleri: tema, palet, vaka penceresi, form, görüşme takvimi
   fonts/               Paylaşım görselleri için fontlar (Manrope, Playfair Display, IBM Plex Mono)
   views/               Blade şablonları (partials/sections altında ana sayfa bölümleri)

@@ -6,6 +6,7 @@ use App\Filament\Resources\Meetings\Pages\ListMeetings;
 use App\Models\Meeting;
 use BackedEnum;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -72,7 +73,9 @@ class MeetingResource extends Resource
                 TextColumn::make('topic')->label('Konu')->badge()->color('gray')->formatStateUsing(fn ($state) => __('site.contact.types')[$state] ?? $state),
                 TextColumn::make('status')->label('Durum')->badge()
                     ->formatStateUsing(fn ($state) => Meeting::STATUSES[$state] ?? $state)
-                    ->color(fn ($state) => match ($state) { 'confirmed' => 'success', 'cancelled' => 'danger', default => 'warning' }),
+                    ->color(fn ($state) => match ($state) {
+                        'confirmed' => 'success', 'cancelled' => 'danger', default => 'warning'
+                    }),
             ])
             ->filters([
                 TernaryFilter::make('upcoming')->label('Zaman')->trueLabel('Yaklaşanlar')->falseLabel('Geçmiş')->default(true)
@@ -87,13 +90,15 @@ class MeetingResource extends Resource
                 Action::make('confirm')->label('Onayla')->icon(Heroicon::Check)->color('success')
                     ->visible(fn ($record) => $record->status === 'pending')
                     ->action(fn ($record) => $record->update(['status' => 'confirmed'])),
-                Action::make('cancel')->label('İptal et')->icon(Heroicon::XMark)->color('danger')->requiresConfirmation()
-                    ->visible(fn ($record) => $record->status !== 'cancelled')
-                    ->action(fn ($record) => $record->update(['status' => 'cancelled'])),
-                Action::make('mail')->label('E-posta')->icon(Heroicon::Envelope)->color('gray')
-                    ->url(fn ($record) => 'mailto:'.$record->email.'?subject='.rawurlencode('Görüşmemiz: '.$record->starts_at->locale('tr')->translatedFormat('j F, H:i'))),
-                ViewAction::make(),
-                DeleteAction::make(),
+                ActionGroup::make([
+                    Action::make('cancel')->label('İptal et')->icon(Heroicon::XMark)->color('danger')->requiresConfirmation()
+                        ->visible(fn ($record) => $record->status !== 'cancelled')
+                        ->action(fn ($record) => $record->update(['status' => 'cancelled'])),
+                    Action::make('mail')->label('E-posta')->icon(Heroicon::Envelope)->color('gray')
+                        ->url(fn ($record) => 'mailto:'.$record->email.'?subject='.rawurlencode('Görüşmemiz: '.$record->starts_at->locale('tr')->translatedFormat('j F, H:i'))),
+                    ViewAction::make(),
+                    DeleteAction::make(),
+                ]),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([DeleteBulkAction::make()]),

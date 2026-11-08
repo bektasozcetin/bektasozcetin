@@ -9,9 +9,9 @@ use Filament\Widgets\TableWidget;
 
 class PopularContent extends TableWidget
 {
-    protected static ?int $sort = -1;
+    protected static bool $isLazy = false;
 
-    protected int|string|array $columnSpan = 'full';
+    protected static ?int $sort = 1;
 
     protected static ?string $heading = 'En çok bakılan projeler';
 

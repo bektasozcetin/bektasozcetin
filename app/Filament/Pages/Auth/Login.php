@@ -18,7 +18,7 @@ class Login extends BaseLogin
 
     public function getTitle(): string|Htmlable
     {
-        return 'Giriş · bektas.dev';
+        return 'Giriş';
     }
 
     public function getHeading(): string|Htmlable|null
