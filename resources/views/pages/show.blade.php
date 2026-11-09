@@ -1,4 +1,11 @@
 <x-layouts.app :title="$metaTitle" :description="$metaDescription">
+    @if ($page === 'faq' && ($faqSchema = \App\Support\Schema::faqPage($faqs ?? [])))
+        {{-- Google arama sonucunda açılır soru-cevap gösterebilsin. --}}
+        <x-slot:head>
+            <script type="application/ld+json">{!! $faqSchema !!}</script>
+        </x-slot:head>
+    @endif
+
     {{-- Ana sayfaya dönüş: alt sayfada kaybolmasın. --}}
     <nav class="fade-up -mb-4" aria-label="breadcrumb">
         <a class="navlink -ml-3.5 inline-flex items-center gap-2 text-sm" href="{{ localized_route('home') }}">

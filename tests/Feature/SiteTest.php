@@ -232,6 +232,45 @@ class SiteTest extends TestCase
         $this->get('/sitemap.xml')->assertOk()->assertSee('/hizmetler')->assertSee('/en/faq');
     }
 
+    public function test_structured_data_is_valid_json(): void
+    {
+        // Blade'in @context direktifi JSON-LD'yi bozuyordu; şemalar artık
+        // App\Support\Schema içinde üretiliyor. Bu test o hatayı tekrar yakalar.
+        $cikar = function (string $html): array {
+            preg_match_all('~<script type="application/ld\+json">(.*?)</script>~s', $html, $m);
+
+            return array_map(fn ($json) => json_decode(trim($json), true), $m[1]);
+        };
+
+        $anaSayfa = $cikar($this->get('/')->assertOk()->getContent());
+        $this->assertCount(1, $anaSayfa);
+        $this->assertSame('https://schema.org', $anaSayfa[0]['@context'] ?? null);
+        $this->assertSame('Person', $anaSayfa[0]['@type'] ?? null);
+        $this->assertSame('Ankara', $anaSayfa[0]['address']['addressLocality'] ?? null);
+
+        $sss = $cikar($this->get('/sss')->assertOk()->getContent());
+        $turler = array_column(array_filter($sss), '@type');
+        $this->assertContains('FAQPage', $turler);
+
+        $post = \App\Models\Post::published()->first();
+        $yazi = $cikar($this->get('/notlar/'.$post->slug)->assertOk()->getContent());
+        $turler = array_column(array_filter($yazi), '@type');
+        $this->assertContains('BlogPosting', $turler);
+
+        // Hiçbirinde ham PHP sızıntısı olmamalı
+        foreach ([...$anaSayfa, ...$sss, ...$yazi] as $sema) {
+            $this->assertIsArray($sema, 'JSON-LD çözümlenemedi: bozuk çıktı');
+        }
+    }
+
+    public function test_robots_txt_points_to_absolute_sitemap(): void
+    {
+        $this->get('/robots.txt')
+            ->assertOk()
+            ->assertSee('Disallow: /admin')
+            ->assertSee(route('sitemap'));   // göreli değil, mutlak adres
+    }
+
     public function test_github_sync_updates_and_adds_repositories(): void
     {
         \Illuminate\Support\Facades\Http::fake([

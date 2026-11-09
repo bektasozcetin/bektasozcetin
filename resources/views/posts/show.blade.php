@@ -6,19 +6,7 @@
     <x-slot:head>
         <meta property="article:published_time" content="{{ $post->published_at->toIso8601String() }}">
         <script type="application/ld+json">
-            {!! json_encode([
-                '@context' => 'https://schema.org',
-                '@type' => 'BlogPosting',
-                'headline' => $title,
-                'description' => $post->t('excerpt'),
-                'datePublished' => $post->published_at->toIso8601String(),
-                'dateModified' => $post->updated_at->toIso8601String(),
-                'inLanguage' => app()->getLocale(),
-                'image' => $ogImage,
-                'url' => $url,
-                'keywords' => implode(', ', $post->tags ?? []),
-                'author' => ['@type' => 'Person', 'name' => config('site.name'), 'url' => url('/')],
-            ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+            {!! \App\Support\Schema::blogPosting($post, $title, $url, $ogImage) !!}
         </script>
     </x-slot:head>
 

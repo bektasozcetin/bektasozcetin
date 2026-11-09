@@ -48,3 +48,15 @@ Route::get('gorusme/uygunluk', [MeetingController::class, 'slots'])->middleware(
 Route::post('goruntulenme/{project:slug}', ViewController::class)->middleware('throttle:60,1')->name('views.project');
 Route::get('sitemap.xml', SitemapController::class)->name('sitemap');
 Route::get('feed.xml', FeedController::class)->name('feed');
+
+// robots.txt: site haritasi mutlak adres olmali, bu yuzden statik dosya degil rota.
+Route::get('robots.txt', fn () => response(
+    "User-agent: *
+Disallow: /admin
+Disallow: /gorusme/
+
+Sitemap: ".route('sitemap')."
+",
+    200,
+    ['Content-Type' => 'text/plain; charset=UTF-8'],
+))->name('robots');

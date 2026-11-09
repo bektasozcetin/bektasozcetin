@@ -60,17 +60,7 @@
 
     {{ $head ?? '' }}
 
-    <script type="application/ld+json">
-        {!! json_encode([
-            '@context' => 'https://schema.org',
-            '@type' => 'Person',
-            'name' => config('site.name'),
-            'jobTitle' => 'Full Stack Laravel Developer',
-            'url' => url('/'),
-            'image' => asset('images/portrait.jpg'),
-            'sameAs' => array_values(array_filter(config('site.social'))),
-        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
-    </script>
+    <script type="application/ld+json">{!! \App\Support\Schema::person() !!}</script>
 </head>
 <body x-data="site" @keydown.window="globalKey($event)">
     <div class="relative overflow-clip">
