@@ -10,7 +10,7 @@ return [
     'skip' => 'Skip to content',
     'nav' => [
         'notes' => 'Notes', 'work' => 'Work', 'services' => 'Services', 'skills' => 'Skills', 'about' => 'About', 'faq' => 'FAQ',
-        'code' => 'Code', 'models' => 'Ways to work', 'contact' => 'Contact',
+        'code' => 'Code', 'contact' => 'Contact',
         'quick' => 'Quick jump', 'menu' => 'Menu', 'menu_label' => 'Main menu', 'close_menu' => 'Close menu', 'lang' => 'Language',
         'experience' => 'Experience', 'refs' => 'References',
         'to_dark' => 'Switch to dark theme', 'to_light' => 'Switch to light theme',
@@ -28,9 +28,9 @@ return [
         'in_issue' => 'In this issue',
         'lines' => [
             ['id' => 'projeler', 'n' => '01', 't' => ':count case studies', 's' => 'Problem, decision, result'],
-            ['id' => 'yetkinlikler', 'n' => '03', 't' => 'Craft at every layer', 's' => 'Backend, API, interface, DevOps'],
-            ['id' => 'kod', 'n' => '04', 't' => 'Code showcase', 's' => 'Action · Livewire · Pest · Migration'],
-            ['id' => 'calisma', 'n' => '08', 't' => 'Projects, care, consulting', 's' => 'Models with clear scope and price'],
+            ['page' => 'services', 'n' => '02', 't' => 'What I build', 's' => 'Booking, panels, APIs, SaaS'],
+            ['page' => 'skills', 'n' => '03', 't' => 'Craft at every layer', 's' => 'Backend, API, interface, DevOps'],
+            ['page' => 'about', 'n' => '06', 't' => 'About me', 's' => 'How I work'],
             ['id' => 'iletisim', 'n' => '12', 't' => 'Book a call', 's' => 'Türkiye time now '],
         ],
     ],
@@ -137,19 +137,6 @@ return [
         'lede' => 'Where I\'ve worked, my education and certificates.', 'edu_title' => 'Education & certificates',
     ],
 
-    'models' => [
-        'eyebrow' => '08 · Ways to work', 'title_a' => 'How we can', 'title_b' => 'work together',
-        'lede' => 'Clear scope, price known up front. Pick the model that fits and we\'ll cover the rest on a call.',
-        'process_a' => 'Process', 'process_b' => '· six steps from idea to launch',
-        'steps' => [
-            ['Discovery', 'Clarify needs, users and goals.'],
-            ['Database', 'Tables, relationships and migration plan.'],
-            ['Backend & API', 'Business logic, services and endpoints.'],
-            ['Interface', 'Responsive screens with Tailwind and Livewire.'],
-            ['Test', 'Feature and unit tests with Pest.'],
-            ['Deploy', 'Release with CI/CD, then monitor.'],
-        ],
-    ],
 
     'refs' => ['eyebrow' => '09 · References', 'title_a' => 'What people I\'ve', 'title_b' => 'worked with say', 'photo' => 'photo'],
 
@@ -239,11 +226,6 @@ return [
             'description' => 'Where I have worked, the roles I held, my education and certificates.',
             'lede' => 'My road so far: where I worked and what I learned.',
         ],
-        'pricing' => [
-            'title' => 'Ways to work',
-            'description' => 'Project-based development, monthly maintenance and consulting models, with scope and price ranges.',
-            'lede' => 'Clear scope, no surprises. We pick the right model together in the first call.',
-        ],
         'testimonials' => [
             'title' => 'References',
             'description' => 'What the people and teams I worked with have to say.',
@@ -269,7 +251,6 @@ return [
             ['ilkeler', 'Principles', 'Five rules', 'R'],
             ['hakkimda', 'About', 'ID card and approach', 'B'],
             ['deneyim', 'Experience', 'Career, education', 'E'],
-            ['calisma', 'Ways to work', 'Projects, care, consulting', 'W'],
             ['referanslar', 'References', 'People I\'ve worked with', 'Q'],
             ['notlar', 'Notes', 'Writing on Laravel', 'N'],
             ['sss', 'FAQ', 'Common questions', '?'],

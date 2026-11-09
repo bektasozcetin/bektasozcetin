@@ -14,8 +14,8 @@ class HomeController extends Controller
     {
         $projects = Project::published()->get();
 
-        // Hizmetler, yetkinlikler, hakkımda, deneyim, fiyatlar, referanslar ve
-        // SSS artık kendi sayfalarında: bkz. config/nav.php + PageController.
+        // Hizmetler, yetkinlikler, hakkımda, deneyim, referanslar ve SSS artık
+        // kendi sayfalarında: bkz. config/nav.php + PageController.
         return view('home', [
             'projects' => $projects,
             'projectCount' => $projects->count(),

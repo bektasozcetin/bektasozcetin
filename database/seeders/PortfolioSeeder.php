@@ -7,7 +7,6 @@ use App\Models\Education;
 use App\Models\Experience;
 use App\Models\Faq;
 use App\Models\Meeting;
-use App\Models\PricingPlan;
 use App\Models\Project;
 use App\Models\Repository;
 use App\Models\Service;
@@ -37,7 +36,6 @@ class PortfolioSeeder extends Seeder
         $this->skills();
         $this->repositories();
         $this->experience();
-        $this->pricing();
         $this->testimonials();
         $this->faqs();
         $this->settings();
@@ -50,7 +48,7 @@ class PortfolioSeeder extends Seeder
      */
     private function fresh(): void
     {
-        foreach ([Brand::class, Service::class, Skill::class, Repository::class, Experience::class, Education::class, PricingPlan::class, Testimonial::class, Faq::class, Meeting::class] as $model) {
+        foreach ([Brand::class, Service::class, Skill::class, Repository::class, Experience::class, Education::class, Testimonial::class, Faq::class, Meeting::class] as $model) {
             $model::query()->delete();
         }
     }
@@ -221,37 +219,6 @@ class PortfolioSeeder extends Seeder
         ];
         foreach ($edu as $i => [$kind, $title, $subtitle]) {
             Education::create(compact('kind', 'title', 'subtitle') + ['sort' => $i]);
-        }
-    }
-
-    private function pricing(): void
-    {
-        $t = fn ($tr, $en = null) => $this->t($tr, $en);
-        $rows = [
-            [
-                'title' => $t('Proje bazlı', 'Project-based'), 'badge' => null,
-                'description' => $t('Yeni bir web uygulaması, e-ticaret ya da admin paneli. Kapsam ve takvim baştan belli.', 'A new web app, shop or admin panel. Scope and timeline agreed up front.'),
-                'price_label' => $t('Başlangıç', 'From'), 'price' => $t('₺45.000', '$1,500'),
-                'items' => [$t('Analiz ve kapsam dokümanı', 'Discovery and scope document'), $t('Tasarımdan koda arayüz', 'Design-to-code interface'), $t('Testler ve otomatik deploy', 'Tests and automated deploys'), $t('Teslim sonrası 30 gün ücretsiz destek', '30 days of free support after launch')],
-                'cta' => $t('Proje için görüşelim', 'Discuss a project'), 'contact_type' => 'web', 'is_featured' => false,
-            ],
-            [
-                'title' => $t('Aylık bakım', 'Monthly care'), 'badge' => $t('Uzun vadeli', 'Long-term'),
-                'description' => $t('Mevcut Laravel projen için güncellemeler, güvenlik yamaları ve küçük geliştirmeler.', 'Updates, security patches and small improvements for your existing Laravel app.'),
-                'price_label' => $t('Aylık', 'Monthly'), 'price' => $t('₺8.500 / ay', '$290 / month'),
-                'items' => [$t('Laravel ve paket güncellemeleri', 'Laravel and package updates'), $t('Güvenlik ve yedek kontrolü', 'Security and backup checks'), $t('Ayda 10 saat geliştirme', '10 development hours a month'), $t('Aylık kısa rapor', 'Short monthly report')],
-                'cta' => $t('Bakım için görüşelim', 'Discuss maintenance'), 'contact_type' => 'care', 'is_featured' => true,
-            ],
-            [
-                'title' => $t('Danışmanlık', 'Consulting'), 'badge' => null,
-                'description' => $t('Kod incelemesi, mimari kararlar ya da performans sorunları için saatlik destek.', 'Hourly help with code reviews, architecture decisions or performance problems.'),
-                'price_label' => $t('Saatlik', 'Hourly'), 'price' => $t('₺1.500 / saat', '$50 / hour'),
-                'items' => [$t('Kod ve mimari incelemesi', 'Code and architecture review'), $t('Performans analizi', 'Performance analysis'), $t('Ekibe Laravel eşliği', 'Laravel pairing with your team'), $t('Yazılı öneri raporu', 'Written recommendations')],
-                'cta' => $t('Danışmanlık al', 'Book consulting'), 'contact_type' => 'consult', 'is_featured' => false,
-            ],
-        ];
-        foreach ($rows as $i => $row) {
-            PricingPlan::create($row + ['sort' => $i]);
         }
     }
 

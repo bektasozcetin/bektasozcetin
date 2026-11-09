@@ -10,7 +10,7 @@ return [
     'skip' => 'İçeriğe geç',
     'nav' => [
         'notes' => 'Notlar', 'work' => 'Projeler', 'services' => 'Hizmetler', 'skills' => 'Yetkinlikler', 'about' => 'Hakkımda', 'faq' => 'SSS',
-        'code' => 'Kod vitrini', 'models' => 'Çalışma modelleri', 'contact' => 'İletişim',
+        'code' => 'Kod vitrini', 'contact' => 'İletişim',
         'quick' => 'Hızlı geçiş', 'menu' => 'Menü', 'menu_label' => 'Ana menü', 'close_menu' => 'Menüyü kapat', 'lang' => 'Dil',
         'experience' => 'Deneyim', 'refs' => 'Referanslar',
         'to_dark' => 'Koyu temaya geç', 'to_light' => 'Açık temaya geç',
@@ -28,9 +28,9 @@ return [
         'in_issue' => 'Bu sayıda',
         'lines' => [
             ['id' => 'projeler', 'n' => '01', 't' => ':count vaka çalışması', 's' => 'Sorun, karar, sonuç'],
-            ['id' => 'yetkinlikler', 'n' => '03', 't' => 'Her katmanda ustalık', 's' => 'Backend, API, arayüz, DevOps'],
-            ['id' => 'kod', 'n' => '04', 't' => 'Kod vitrini', 's' => 'Action · Livewire · Pest · Migration'],
-            ['id' => 'calisma', 'n' => '08', 't' => 'Proje, bakım, danışmanlık', 's' => 'Kapsamı ve fiyatı belli modeller'],
+            ['page' => 'services', 'n' => '02', 't' => 'Neler yapıyorum', 's' => 'Randevu, panel, API, SaaS'],
+            ['page' => 'skills', 'n' => '03', 't' => 'Her katmanda ustalık', 's' => 'Backend, API, arayüz, DevOps'],
+            ['page' => 'about', 'n' => '06', 't' => 'Hakkımda', 's' => 'Nasıl çalışırım'],
             ['id' => 'iletisim', 'n' => '12', 't' => 'Görüşme planla', 's' => 'Türkiye saatiyle şu an '],
         ],
     ],
@@ -137,19 +137,6 @@ return [
         'lede' => 'Çalıştığım yerler, eğitimim ve sertifikalarım.', 'edu_title' => 'Eğitim & sertifikalar',
     ],
 
-    'models' => [
-        'eyebrow' => '08 · Çalışma modelleri', 'title_a' => 'Nasıl', 'title_b' => 'çalışabiliriz?',
-        'lede' => 'Kapsamı net, fiyatı baştan belli. İhtiyacına uyan modeli seç, gerisini görüşmede konuşalım.',
-        'process_a' => 'Süreç', 'process_b' => '· fikirden canlıya altı adım',
-        'steps' => [
-            ['Analiz', 'İhtiyaçları, kullanıcıları ve hedefleri netleştirme.'],
-            ['Veritabanı', 'Tablolar, ilişkiler ve migration planı.'],
-            ['Backend & API', 'İş mantığı, servisler ve endpoint\'ler.'],
-            ['Arayüz', 'Tailwind ve Livewire ile responsive ekranlar.'],
-            ['Test', 'Pest ile feature ve unit testler.'],
-            ['Deploy', 'CI/CD ile canlıya alma ve izleme.'],
-        ],
-    ],
 
     'refs' => ['eyebrow' => '09 · Referanslar', 'title_a' => 'Birlikte çalıştıklarım', 'title_b' => 'ne diyor?', 'photo' => 'foto'],
 
@@ -239,11 +226,6 @@ return [
             'description' => 'Çalıştığım yerler, üstlendiğim roller, eğitimim ve sertifikalarım.',
             'lede' => 'Yol haritam: nerede ne yaptım, neyi öğrendim.',
         ],
-        'pricing' => [
-            'title' => 'Çalışma modelleri',
-            'description' => 'Proje bazlı geliştirme, aylık bakım ve danışmanlık modelleri; kapsam ve fiyat aralıkları.',
-            'lede' => 'Kapsamı belli, sürprizsiz modeller. Hangisinin uyduğunu ilk görüşmede birlikte seçeriz.',
-        ],
         'testimonials' => [
             'title' => 'Referanslar',
             'description' => 'Birlikte çalıştığım kişi ve ekiplerin değerlendirmeleri.',
@@ -269,7 +251,6 @@ return [
             ['ilkeler', 'İlkeler', 'Beş kural', 'İ'],
             ['hakkimda', 'Hakkımda', 'Kimlik kartı ve yaklaşım', 'B'],
             ['deneyim', 'Deneyim', 'Yol haritası, eğitim', 'D'],
-            ['calisma', 'Çalışma modelleri', 'Proje, bakım, danışmanlık', 'Ç'],
             ['referanslar', 'Referanslar', 'Birlikte çalıştıklarım', 'R'],
             ['notlar', 'Notlar', 'Laravel üzerine yazılar', 'N'],
             ['sss', 'SSS', 'Sık sorulan sorular', '?'],

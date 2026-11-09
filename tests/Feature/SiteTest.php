@@ -7,7 +7,6 @@ use App\Models\ContactMessage;
 use App\Models\Education;
 use App\Models\Experience;
 use App\Models\Faq;
-use App\Models\PricingPlan;
 use App\Models\Project;
 use App\Models\Repository;
 use App\Models\Service;
@@ -92,12 +91,12 @@ class SiteTest extends TestCase
         $this->actingAs($admin);
 
         $this->get('/admin')->assertOk();
-        foreach (['brands', 'projects', 'services', 'repositories', 'experiences', 'educations', 'pricing-plans', 'testimonials', 'faqs', 'contact-messages', 'posts', 'meetings', 'ayarlar', 'skills'] as $resource) {
+        foreach (['brands', 'projects', 'services', 'repositories', 'experiences', 'educations', 'testimonials', 'faqs', 'contact-messages', 'posts', 'meetings', 'ayarlar', 'skills'] as $resource) {
             $this->get("/admin/{$resource}")->assertOk();
         }
         $models = [
             'projects' => Project::class, 'services' => Service::class, 'repositories' => Repository::class,
-            'experiences' => Experience::class, 'educations' => Education::class, 'pricing-plans' => PricingPlan::class,
+            'experiences' => Experience::class, 'educations' => Education::class,
             'testimonials' => Testimonial::class, 'faqs' => Faq::class, 'posts' => Post::class,
         ];
         foreach ($models as $resource => $model) {
@@ -211,7 +210,7 @@ class SiteTest extends TestCase
     {
         $sayfalar = [
             'hizmetler' => 'services', 'yetkinlikler' => 'skills', 'hakkimda' => 'about',
-            'deneyim' => 'experience', 'fiyatlar' => 'pricing', 'referanslar' => 'testimonials', 'sss' => 'faq',
+            'deneyim' => 'experience', 'referanslar' => 'testimonials', 'sss' => 'faq',
         ];
 
         foreach ($sayfalar as $tr => $en) {
@@ -226,7 +225,13 @@ class SiteTest extends TestCase
         $this->get('/')->assertOk()
             ->assertSee('id="kesfet"', false)
             ->assertDontSee('id="yetkinlikler"', false)
-            ->assertDontSee('id="calisma"', false);
+            ->assertDontSee('id="deneyim"', false);
+
+        // Fiyatlandırma tamamen kaldırıldı: ne sayfa, ne panel, ne tablo.
+        $this->get('/fiyatlar')->assertNotFound();
+        $this->get('/en/pricing')->assertNotFound();
+        $this->get('/admin/pricing-plans')->assertNotFound();
+        $this->assertFalse(\Illuminate\Support\Facades\Schema::hasTable('pricing_plans'));
 
         // Site haritası yeni sayfaları içeriyor.
         $this->get('/sitemap.xml')->assertOk()->assertSee('/hizmetler')->assertSee('/en/faq');

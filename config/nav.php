@@ -46,13 +46,6 @@ return [
             'needs' => ['experiences', 'educations'],
         ],
 
-        'pricing' => [
-            'slug' => ['tr' => 'fiyatlar', 'en' => 'pricing'],
-            'key' => 'models',
-            'sections' => ['calisma'],
-            'needs' => ['plans'],
-        ],
-
         'testimonials' => [
             'slug' => ['tr' => 'referanslar', 'en' => 'testimonials'],
             'key' => 'refs',

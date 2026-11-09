@@ -60,11 +60,12 @@
     <nav class="fade-up flex min-w-0 flex-col self-end [grid-area:right] [animation-delay:.85s]" aria-label="{{ __('site.cover.in_issue') }}">
         <span class="meta pb-2.5">{{ __('site.cover.in_issue') }}</span>
         @foreach (__('site.cover.lines') as $line)
-            <a class="coverline" href="#{{ $line['id'] }}">
+            {{-- Satır ya ana sayfadaki bir bölüme (id) ya da bir alt sayfaya (page) gider. --}}
+            <a class="coverline" href="{{ isset($line['page']) ? localized_route($line['page']) : '#'.$line['id'] }}">
                 <span class="volt font-mono text-xs font-medium">{{ $line['n'] }}</span>
                 <span class="flex min-w-0 flex-col leading-[1.3]">
                     <span class="font-display text-base font-semibold tracking-[-0.02em] text-c0">{{ str_replace(':count', $projectCount, $line['t']) }}</span>
-                    <span class="text-[13px] text-c4">{{ $line['s'] }}@if ($line['id'] === 'iletisim')<span x-data="clock" x-text="time">--:--</span>@endif</span>
+                    <span class="text-[13px] text-c4">{{ $line['s'] }}@if (($line['id'] ?? null) === 'iletisim')<span x-data="clock" x-text="time">--:--</span>@endif</span>
                 </span>
                 <x-ico name="arrow" class="arr" />
             </a>

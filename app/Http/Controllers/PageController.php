@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Education;
 use App\Models\Experience;
 use App\Models\Faq;
-use App\Models\PricingPlan;
 use App\Models\Service;
 use App\Models\Skill;
 use App\Models\Testimonial;
@@ -15,7 +14,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Ana sayfadan ayrılan alt sayfalar: hizmetler, yetkinlikler, hakkımda,
- * deneyim, fiyatlar, referanslar ve SSS.
+ * deneyim, referanslar ve SSS.
  *
  * Hangi sayfanın hangi bölümleri ve verileri kullandığı config/nav.php
  * dosyasında tanımlı; rota adı `page` varsayılanı olarak geliyor.
@@ -58,7 +57,6 @@ class PageController extends Controller
             'skills' => fn () => Skill::published()->get()->groupBy('group'),
             'experiences' => fn () => Experience::ordered()->get(),
             'educations' => fn () => Education::ordered()->get(),
-            'plans' => fn () => PricingPlan::ordered()->get(),
             'testimonials' => fn () => Testimonial::where('is_published', true)->ordered()->get(),
             'faqs' => fn () => Faq::where('is_published', true)->ordered()->get(),
         ];
