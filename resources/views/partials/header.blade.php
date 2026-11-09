@@ -26,9 +26,8 @@
             <x-ico name="sun" x-show="theme === 'dark'" />
             <x-ico name="moon" x-show="theme === 'light'" x-cloak />
         </button>
-        <button type="button" class="navlink ml-1 cursor-pointer border border-line bg-fill-soft" @click="openPalette" aria-haspopup="dialog" aria-keyshortcuts="Control+K">
-            <x-ico name="search" :size="15" />{{ __('site.nav.quick') }}
-        </button>
+        {{-- "Hızlı geçiş" düğmesi menüyü kalabalıklaştırıyordu; palet Ctrl/⌘+K
+             ile ve mobildeki arama simgesiyle açılmaya devam ediyor. --}}
         <a class="btn btn-primary btn-sm ml-1.5" href="{{ $home }}#iletisim" @click="book($event)">{{ __('site.cta') }}</a>
     </nav>
 
