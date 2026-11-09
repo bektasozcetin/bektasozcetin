@@ -30,6 +30,7 @@ class PortfolioSeeder extends Seeder
 
     public function run(): void
     {
+        $this->fresh();
         $this->brands();
         $this->projects();
         $this->services();
@@ -43,83 +44,77 @@ class PortfolioSeeder extends Seeder
         $this->meetings();
     }
 
+    /**
+     * Bu seeder listeleri create() ile yazıyor; temizlemeden yeniden çalıştırmak
+     * her kaydı çoğaltırdı. Projeler hariç tutuldu: onlar slug ile güncelleniyor.
+     */
+    private function fresh(): void
+    {
+        foreach ([Brand::class, Service::class, Skill::class, Repository::class, Experience::class, Education::class, PricingPlan::class, Testimonial::class, Faq::class, Meeting::class] as $model) {
+            $model::query()->delete();
+        }
+    }
+
     private function projects(): void
     {
         $t = fn ($tr, $en = null) => $this->t($tr, $en);
 
         $projects = [
             [
-                'slug' => 'atolye-market', 'category' => 'web', 'year' => '2026',
-                'type' => $t('E-TİCARET', 'E-COMMERCE'),
-                'title' => $t('Atölye Market'),
-                'description' => $t("El yapımı ürün satan 240'tan fazla bağımsız üretici için çok satıcılı pazar yeri: ürün, sepet, iyzico ile ödeme, kargo ve e-Fatura entegrasyonu.", 'Multi-vendor marketplace for 240+ independent makers of handmade goods: products, cart, iyzico payments, shipping and e-Invoice integration.'),
-                'result' => $t("Ödeme adımında terk oranı %31'den %18'e düştü", 'Checkout abandonment fell from 31% to 18%'),
-                'role' => $t('Tek geliştirici · uçtan uca', 'Sole developer · end to end'),
-                'duration' => $t('5 ay', '5 months'),
-                'problem' => $t('Satıcılar stoklarını e-tablolarda tutuyor, siparişler WhatsApp ile e-posta arasında kayboluyordu. Ödeme sayfası mobilde 4 saniyede açılıyor, her üç alıcıdan biri bu adımda vazgeçiyordu.', 'Sellers kept stock in spreadsheets and orders got lost between WhatsApp and email. Checkout took 4 seconds to load on mobile and one in three buyers gave up there.'),
-                'approach' => $t('Sipariş, stok ve ödeme akışını tek bir Laravel uygulamasında topladım. Arayüzü Livewire ile kurdum, ödeme ve fatura işlemlerini kuyruğa aldım.', 'I brought orders, stock and payments into one Laravel app, built the interface with Livewire and moved payments and invoicing onto queues.'),
-                'lesson' => $t('Kargo entegrasyonunu en sona bıraktım; firmaların test ortamları beklediğimden yavaş çıktı. Bugün olsa dış servis entegrasyonlarıyla başlardım.', "I left the shipping integration for last and the carriers' sandboxes were slower than expected. Today I'd start with third-party integrations."),
-                'decisions' => [
-                    ['q' => $t('Livewire mı, Inertia + Vue mu?', 'Livewire or Inertia + Vue?'), 'a' => $t('Livewire: ekip küçüktü, tek dilde daha hızlı geliştirme ve daha az bakım.', 'Livewire: a small team, one language, faster development and less upkeep.')],
-                    ['q' => $t('Ödemeler senkron mu, kuyrukta mı?', 'Payments inline or queued?'), 'a' => $t('Kuyrukta (Horizon): ödeme sağlayıcısı yavaşladığında sipariş akışı kilitlenmiyor.', 'Queued (Horizon): a slow payment provider no longer blocks the order flow.')],
-                ],
-                'tags' => ['Laravel', 'Livewire', 'Tailwind', 'MySQL', 'Horizon', 'iyzico'],
-            ],
-            [
-                'slug' => 'teklif-masasi', 'category' => 'panel', 'year' => '2025',
-                'type' => $t('ADMIN PANEL'),
-                'title' => $t('Teklif Masası'),
-                'description' => $t('12 kişilik bir satış ekibi için müşteri, teklif ve fatura takibi yapan, rol bazlı yönetim paneli.', 'Role-based panel for a 12-person sales team to track customers, quotes and invoices.'),
-                'result' => $t('Teklif hazırlama süresi 45 dakikadan 12 dakikaya indi', 'Preparing a quote went from 45 minutes to 12'),
-                'role' => $t('Backend ve panel geliştirme', 'Backend and panel development'),
-                'duration' => $t('10 hafta', '10 weeks'),
-                'problem' => $t('Teklifler Excel şablonlarında hazırlanıyor, fiyat listesi her dosyada farklı oluyordu. Kimin hangi teklifi değiştirdiği bilinmiyordu.', 'Quotes were built from Excel templates, the price list differed in every file and nobody knew who changed which quote.'),
-                'approach' => $t('Filament üzerine rol bazlı bir panel kurdum. Teklif, müşteri ve fatura kayıtlarını ilişkilendirip değişiklik geçmişi ekledim.', 'I built a role-based panel on Filament, linked quotes, customers and invoices, and added a change history.'),
-                'lesson' => $t('İlk sürümde fazla rapor ekranı yaptım, ekip yalnızca ikisini kullandı. Artık raporları kullanıcılarla birlikte seçiyorum.', 'The first version shipped too many report screens and the team used only two. Now I choose reports together with users.'),
-                'decisions' => [
-                    ['q' => $t('Sıfırdan panel mi, Filament mı?', 'Custom panel or Filament?'), 'a' => $t('Filament: standart ekranlarda zaman kazandım, özel ihtiyaçlar için kendi bileşenlerimi yazdım.', 'Filament: standard screens came for free; I wrote custom components where needed.')],
-                    ['q' => $t('Yetkiler nasıl yönetilsin?', 'How should permissions work?'), 'a' => $t('Policy ve Gate ile: her rolün yetkisi kodda, test edilebilir şekilde tanımlı.', "Policies and Gates: every role's permissions live in code and are tested.")],
-                ],
-                'tags' => ['Filament', 'Laravel', 'PostgreSQL'],
-            ],
-            [
-                'slug' => 'siradaki', 'category' => 'web', 'year' => '2025',
+                'slug' => 'randevu-ajandam', 'category' => 'web', 'year' => '2026',
                 'type' => $t('SAAS'),
-                'title' => $t('Sıradaki'),
-                'description' => $t('Kuaför, klinik ve stüdyolar için online randevu ve abonelik sistemi: takvim, SMS hatırlatma ve iyzico ile ödeme.', 'Online booking and subscriptions for salons, clinics and studios: calendar, SMS reminders and iyzico payments.'),
-                'result' => $t("Gelmeyen randevu oranı %22'den %7'ye indi", 'No-shows dropped from 22% to 7%'),
-                'role' => $t('Full stack · ürün kararları dahil', 'Full stack, including product decisions'),
-                'duration' => $t('4 ay + bakım', '4 months + ongoing care'),
-                'problem' => $t('İşletmeler randevuları telefonla alıyor, hatırlatma yapılmadığı için her beş müşteriden biri gelmiyordu.', "Businesses took bookings by phone and, without reminders, one in five customers didn't show up."),
-                'approach' => $t('Çok kiracılı bir SaaS kurdum. Her işletme kendi takvimini yönetiyor, hatırlatmalar zamanlanmış job ile otomatik gidiyor.', 'I built a multi-tenant SaaS: each business runs its own calendar and reminders go out automatically via scheduled jobs.'),
-                'lesson' => $t('Çok kiracılı yapıyı baştan kurmak doğruydu, ama kiracıya özel özelleştirme isteklerini daha erken sınırlamalıydım.', 'Building multi-tenancy from day one was right, but I should have limited per-tenant customisation requests earlier.'),
+                'title' => $t('Randevu Ajandam'),
+                'description' => $t('Hekim ve klinikler için online randevu platformu. Hasta tarafındaki site, hekim ve klinik panelleri, hekime özel web sitesi ve doktor mobil uygulaması tek veri modeli üzerinde çalışır.', 'An online booking platform for doctors and clinics. The patient-facing site, the doctor and clinic panels, each doctor’s own website and the mobile app all run on a single data model.'),
+                'result' => $t('Beş ayrı uygulama tek veri modeli ve birbirinden ayrı üç kimlik akışı üzerinden çalışıyor', 'Five separate applications run on one data model with three independent identity flows'),
+                'role' => $t('Full stack · mimari kararlar dahil', 'Full stack, including architecture decisions'),
+                'duration' => $t('Sürüyor', 'Ongoing'),
+                'problem' => $t('Randevu talepleri telefon, WhatsApp ve kâğıt ajanda arasında dağılıyordu. Gelmeyen hasta artıyor, hasta kaydı ile gelir takibi ayrı yerlerde tutuluyordu. Hekimin kendi web sitesi varsa oradaki randevu talebi de panele düşmüyordu.', 'Booking requests were scattered across phone calls, WhatsApp and paper diaries. No-shows kept rising, patient records and income tracking lived in different places, and requests from a doctor’s own website never reached the panel.'),
+                'approach' => $t('Bütün Eloquent modellerini tek bir ana uygulamada topladım. Hekim web siteleri ve halka açık site için model taşımayan ayrı bir API servisi, mobil uygulama için de sürümlü (api/mobile/v1) route’lar açtım. Hekim, klinik personeli ve hasta için ayrı token tabloları ve ayrı ara katmanlar kurdum.', 'I kept every Eloquent model in one core application, exposed a separate model-free API service for doctor websites and the public site, and versioned mobile routes under api/mobile/v1. Doctors, clinic staff and patients each got their own token table and middleware.'),
+                'lesson' => $t('Alt projelere bölmek panelleri bağımsız geliştirmeyi kolaylaştırdı, ama tek doğruluk kaynağının ana uygulama olduğunu yazılı bir mimari kurala bağlamam gerekti; bunu baştan yapmadığım için bir süre modeller iki yere sızdı.', 'Splitting the system into sub-projects made each panel easier to work on, but I had to write down the rule that the core app is the single source of truth — until I did, models leaked into two places.'),
                 'decisions' => [
-                    ['q' => $t('Her kiracıya ayrı veritabanı mı?', 'A database per tenant?'), 'a' => $t('Hayır: tek veritabanı ve tenant_id. Bakım ve migration çok daha kolay.', 'No: one database with tenant_id. Maintenance and migrations stay simple.')],
-                    ['q' => $t('Hatırlatmalar nasıl gönderilsin?', 'How should reminders be sent?'), 'a' => $t('Zamanlanmış job + kuyruk: SMS sağlayıcısı hata verirse otomatik yeniden deneme.', 'Scheduled jobs + queue: automatic retries when the SMS provider fails.')],
+                    ['q' => $t('Modeller nerede dursun?', 'Where should the models live?'), 'a' => $t('Hepsi ana uygulamada. Aracı API servisi model içermez, yalnızca denetleyici ve route taşır; şema tek yerden değişir.', 'All in the core app. The intermediary API service has no models, only controllers and routes, so the schema changes in one place.')],
+                    ['q' => $t('Üç kullanıcı tipi tek token tablosuyla mı?', 'One token table for three user types?'), 'a' => $t('Hayır: hekim, personel ve hasta için ayrı tablo ve ayrı ara katman. Bir akıştaki hata diğerine yetki sızdırmıyor.', 'No: a separate table and middleware for each. A mistake in one flow cannot leak access into another.')],
                 ],
-                'tags' => ['Inertia', 'Vue 3', 'Tailwind', 'iyzico'],
+                'tags' => ['Laravel', 'REST API', 'React Native · Expo', 'FCM', 'PayTR', 'Çok uygulamalı'],
             ],
             [
-                'slug' => 'rota-mobil-api', 'category' => 'api', 'year' => '2024',
-                'type' => $t('REST API'),
-                'title' => $t('Rota Mobil API'),
-                'description' => $t('Bir kurye uygulamasının iOS ve Android sürümlerinin kullandığı, Sanctum kimlik doğrulamalı, sürümlü REST API.', 'Versioned REST API with Sanctum auth, used by the iOS and Android versions of a courier app.'),
-                'result' => $t("p95 yanıt süresi 820 ms'den 140 ms'ye indi", 'p95 response time dropped from 820 ms to 140 ms'),
-                'role' => $t('Backend · API tasarımı', 'Backend · API design'),
-                'duration' => $t('3 ay', '3 months'),
-                'problem' => $t('Mobil ekip dokümansız ve tutarsız bir API ile çalışıyordu: aynı veri farklı uç noktalarda farklı biçimde dönüyor, hiç test yoktu.', 'The mobile team worked against an undocumented, inconsistent API: the same data came back in different shapes and there were no tests.'),
-                'approach' => $t('Sürümlü (/v1), Resource sınıflarıyla tutarlı yanıt veren bir API tasarladım. Her endpoint Pest ile test edildi ve dokümante edildi.', 'I designed a versioned (/v1) API with consistent Resource responses. Every endpoint is tested with Pest and documented.'),
-                'lesson' => $t('Sürümlemeyi ilk günden yapmasaydım geçiş çok daha sancılı olurdu. Dokümantasyonu koddan otomatik üretmek en iyi kararımdı.', 'Without versioning from day one the migration would have been far more painful. Generating docs from code was my best decision.'),
+                'slug' => 'arac-servis', 'category' => 'panel', 'year' => '2026',
+                'type' => $t('YÖNETİM SİSTEMİ', 'MANAGEMENT SYSTEM'),
+                'title' => $t('Araç Servis Yönetim Sistemi', 'Vehicle Service Management System'),
+                'description' => $t('Bir oto servisin gün içindeki tüm işleyişi tek sistemde: randevu, fotoğraflı araç kabul, iş emri, stok, tezgâh satışı, e-Fatura, kasa ve mali müşavir için ayrı salt okunur giriş.', 'Everything an auto repair shop does in a day, in one system: bookings, photographed vehicle intake, work orders, stock, counter sales, e-invoicing, cash desk, and a separate read-only login for the accountant.'),
+                'result' => $t('500.000 iş emirlik veride bütün liste ve arama ekranları 300 ms’nin altında açılıyor; en yavaşı 207 ms', 'With 500,000 work orders in the database every list and search screen opens in under 300 ms; the slowest is 207 ms'),
+                'role' => $t('Tek geliştirici · uçtan uca', 'Sole developer · end to end'),
+                'duration' => $t('Sürüyor', 'Ongoing'),
+                'problem' => $t('Servis, satış, finans, personel ve web sitesi ayrı ayrı yürüyordu. Aynı kayıt birkaç yere elle giriliyor, kullanılan parçanın stoktan düşmesi atlanıyor, mali müşavir veriyi ancak dönem sonunda görüyordu.', 'Service, sales, finance, staff and the website all ran separately. The same record was keyed in several times, parts were not always deducted from stock, and the accountant only saw the data at period end.'),
+                'approach' => $t('İş kurallarını app/Actions altında tek giriş noktasında topladım; Livewire ekranları da mobil API de aynı eylemleri çağırıyor. İzinler config/yetkiler.php dosyasında, menüler ayrı yapılandırma dosyalarında tanımlı. Modeller alan bazlı klasörlere ayrıldı.', 'I collected the business rules into single entry points under app/Actions, called by both the Livewire screens and the mobile API. Permissions live in config/yetkiler.php, menus in their own config files, and models are grouped by domain.'),
+                'lesson' => $t('Yetki matrisini testle sabitlemek en çok işe yarayan karar oldu. Rol × ekran denetimi otomatik çalıştığı için yeni modül eklerken yetki sızması derleme aşamasında yakalanıyor.', 'Pinning the permission matrix down with tests paid off most: because every role × screen combination is checked automatically, a new module cannot quietly open a door it should not.'),
                 'decisions' => [
-                    ['q' => $t('Passport mu, Sanctum mu?', 'Passport or Sanctum?'), 'a' => $t('Sanctum: mobil token ihtiyacı için yeterli, daha sade.', 'Sanctum: enough for mobile tokens, and simpler.')],
-                    ['q' => $t("Yoğun endpoint'ler nasıl hızlandırılsın?", 'How to speed up hot endpoints?'), 'a' => $t('Redis cache + rate limiting: tekrarlayan sorgular veritabanına gitmiyor.', 'Redis cache + rate limiting: repeated queries never hit the database.')],
+                    ['q' => $t('İş kuralları nerede yaşasın?', 'Where should business rules live?'), 'a' => $t('app/Actions içinde. Livewire bileşeni de mobil API de aynı eylemi çağırıyor, kural tek yerde kalıyor.', 'In app/Actions. The Livewire component and the mobile API call the same action, so the rule exists once.')],
+                    ['q' => $t('Performans nasıl güvenceye alınsın?', 'How do you keep performance honest?'), 'a' => $t('Ayrı bir veritabanında 100.000 araç ve 500.000 iş emri üreten yük testi komutu; geliştirmede Model::shouldBeStrict() ile N+1 sorgular hata sayılıyor.', 'A load-test command generates 100,000 vehicles and 500,000 work orders in a separate database, and Model::shouldBeStrict() turns N+1 queries into errors during development.')],
                 ],
-                'tags' => ['Laravel', 'Sanctum', 'Redis', 'Pest'],
+                'tags' => ['Laravel 13', 'Livewire 4', 'Tailwind 4', 'Redis', 'Reverb', 'Pest · 376 test'],
+            ],
+            [
+                'slug' => 'kurumsal-surec-uygulamalari', 'category' => 'panel', 'year' => '2025',
+                'type' => $t('KURUMSAL', 'ENTERPRISE'),
+                'title' => $t('Kurumsal süreç uygulamaları', 'Enterprise process applications'),
+                'description' => $t('Kurum içi başvuru, onay ve takip süreçleri için geliştirdiğim çok rollü Laravel uygulamaları. Talep ve proje takibi, başvuru değerlendirme, kayıt arşivi ve toplu bildirim akışları aynı çekirdek üzerine kuruldu.', 'Multi-role Laravel applications for internal request, approval and tracking processes: request and project tracking, application review, record archives and bulk notification flows, all built on the same core.'),
+                'result' => $t('Kâğıt ve e-tablo ile yürüyen başvuru süreçleri tek sistemde, zaman damgalı ve raporlanabilir hâle geldi', 'Processes that ran on paper and spreadsheets became one system, time-stamped and reportable'),
+                'role' => $t('Backend ve panel geliştirme', 'Backend and panel development'),
+                'duration' => $t('Farklı dönemlerde birden çok proje', 'Several projects over different periods'),
+                'problem' => $t('Başvurular e-posta, dilekçe ve e-tablolar arasında dağılıyordu. Bir talebin hangi aşamada olduğunu, kimin ne zaman onayladığını ve ne kadar beklediğini görmek mümkün değildi.', 'Applications were scattered across email, paper forms and spreadsheets. Nobody could see which stage a request was at, who approved it and when, or how long it had been waiting.'),
+                'approach' => $t('Her süreç için aynı çekirdeği kullandım: durum akışı, izin bazlı yetkilendirme, zaman damgalı işlem geçmişi ve Excel/PDF çıktısı. Yeni bir süreç eklemek yeni bir ekran takımı yazmak değil, mevcut yapıyı yapılandırmak oldu.', 'Every process reuses one core: a state flow, permission-based authorisation, a time-stamped history and Excel/PDF output. Adding a process became a matter of configuring what exists rather than writing new screens.'),
+                'lesson' => $t('Süreci kullanıcıyla birlikte haritalamadan ekran yazmamak gerektiğini burada öğrendim. İlk projede varsaydığım onay adımları gerçekte başka sırayla işliyordu ve akışı sonradan söküp yeniden kurmak gerekti.', 'This is where I learned not to build screens before mapping the process with the people who use it. In the first project the approval steps ran in a different order than I had assumed, and the flow had to be rebuilt.'),
+                'decisions' => [
+                    ['q' => $t('Her süreç için ayrı uygulama mı, ortak çekirdek mi?', 'A separate app per process, or a shared core?'), 'a' => $t('Ortak çekirdek: durum akışı, yetki ve raporlama bir daha yazılmıyor, farklar yapılandırmayla çözülüyor.', 'A shared core: the state flow, permissions and reporting are written once, and differences are handled through configuration.')],
+                    ['q' => $t('Yetkiler rol bazlı mı, izin bazlı mı?', 'Role-based or permission-based access?'), 'a' => $t('İzin bazlı: kişiye özel istisnalar rol yapısını bozmadan verilip geri alınabiliyor.', 'Permission-based: individual exceptions can be granted and revoked without breaking the role structure.')],
+                ],
+                'tags' => ['Laravel', 'Çok rollü', 'Süreç akışı', 'İzin bazlı yetki', 'Excel · PDF'],
             ],
         ];
 
-        // Demo görüntülenme sayıları (panel istatistiklerini görmek için)
-        $views = ['atolye-market' => 1284, 'teklif-masasi' => 642, 'siradaki' => 931, 'rota-mobil-api' => 517];
+        // Yerleri yeni gerçek projelere bırakan kurgusal demo kayıtları.
+        Project::whereIn('slug', ['atolye-market', 'teklif-masasi', 'siradaki', 'rota-mobil-api'])->delete();
 
         foreach ($projects as $i => $project) {
             $project['image'] = $this->demoImage("projects/{$project['slug']}.jpg");
@@ -127,7 +122,6 @@ class PortfolioSeeder extends Seeder
                 $this->demoImage("gallery/{$project['slug']}-1.jpg", 'projects/gallery'),
                 $this->demoImage("gallery/{$project['slug']}-2.jpg", 'projects/gallery'),
             ]));
-            $project['views'] = $views[$project['slug']] ?? 0;
             Project::updateOrCreate(['slug' => $project['slug']], $project + ['sort' => $i]);
         }
     }
@@ -136,15 +130,41 @@ class PortfolioSeeder extends Seeder
     {
         $t = fn ($tr, $en = null) => $this->t($tr, $en);
         $rows = [
-            ['app', $t('Laravel web uygulaması', 'Laravel web applications'), $t('Sıfırdan, ölçeklenebilir ve test edilmiş web uygulamaları. Kimlik doğrulama, roller, ödeme ve raporlama dahil.', 'Scalable, tested web apps from scratch, including authentication, roles, payments and reporting.'), ['Laravel 12', 'Livewire', 'Pest']],
-            ['cart', $t('E-ticaret ve pazar yeri', 'E-commerce and marketplaces'), $t("Çok satıcılı yapı, stok, kampanya ve kargo. Türkiye'deki ödeme ve fatura altyapılarıyla entegrasyon.", 'Multi-vendor setups, stock, campaigns and shipping, integrated with Turkish payment and invoicing services.'), ['iyzico', 'e-Fatura', 'Kargo API']],
-            ['panel', $t('Admin panel ve CRM', 'Admin panels and CRMs'), $t('Filament ile hızlı, rol bazlı yönetim panelleri. Raporlar, dışa aktarma ve değişiklik geçmişi.', 'Fast, role-based admin panels with Filament: reports, exports and change history.'), ['Filament', 'Policies', 'Excel']],
-            ['api', $t('REST API ve mobil backend', 'REST APIs and mobile backends'), $t("Mobil uygulamalar ve üçüncü taraflar için sürümlü, dokümante edilmiş ve test edilmiş API'ler.", 'Versioned, documented and tested APIs for mobile apps and third parties.'), ['Sanctum', 'OpenAPI', 'Redis']],
-            ['up', $t('Sürüm yükseltme ve bakım', 'Upgrades and maintenance'), $t('Eski Laravel sürümlerinden güncel sürüme kademeli ve testlerle güvenceye alınmış geçiş.', 'Step-by-step, test-backed upgrades from old Laravel versions to the current release.'), ['Laravel 8 → 12', 'PHP 8.3', 'CI']],
-            ['gauge', $t('Performans ve kod incelemesi', 'Performance and code review'), $t('Yavaş sayfaların nedenini bulurum: N+1 sorgular, eksik indeksler, cache ve kuyruk fırsatları. Yazılı raporla.', 'I find why pages are slow (N+1 queries, missing indexes, caching and queue opportunities) and deliver a written report.'), ['Telescope', 'Debugbar', 'Pulse']],
+            ['calendar', 'randevu-rezervasyon',
+                $t('Randevu ve rezervasyon sistemleri', 'Booking and reservation systems'),
+                $t('Takvim, çalışma saatleri, izin ve tatil kuralları, çift kayıt engeli, SMS hatırlatma ve bekleme listesi. Hekim, klinik, salon ve etkinlik senaryolarına göre kurgulanır.', 'Calendars, working hours, leave and holiday rules, double-booking protection, SMS reminders and waiting lists, shaped around clinics, salons or events.'),
+                ['Takvim', 'SMS hatırlatma', 'Bekleme listesi']],
+            ['panel', 'yonetim-sistemi',
+                $t('Sektörel yönetim sistemleri', 'Industry management systems'),
+                $t('İş emri, stok, satış, fatura ve kasa akışının tek veritabanında birleştiği rol bazlı paneller. Bir kayıt bir kez girilir, her ekranda doğru görünür.', 'Role-based panels where work orders, stock, sales, invoicing and the cash desk share one database. A record is entered once and reads correctly everywhere.'),
+                ['Livewire · Filament', 'Rol bazlı yetki', 'e-Fatura']],
+            ['layers', 'kurumsal-kamu',
+                $t('Kurumsal süreç ve başvuru uygulamaları', 'Enterprise process and application systems'),
+                $t('Talep, inceleme, onay ve arşiv adımlarından oluşan çok rollü süreçler. Zaman damgalı işlem geçmişi, izin bazlı yetkilendirme ve Excel/PDF raporlar.', 'Multi-role processes built from request, review, approval and archive steps, with a time-stamped history, permission-based access and Excel/PDF reports.'),
+                ['Süreç akışı', 'İzin bazlı yetki', 'Raporlama']],
+            ['api', 'api-mobil',
+                $t('REST API ve mobil backend', 'REST APIs and mobile backends'),
+                $t('Mobil uygulamalar ve üçüncü taraflar için sürümlü, tutarlı yanıt veren ve testli API’ler. Token tabanlı kimlik doğrulama, push bildirim ve hız sınırı dahil.', 'Versioned, consistent and tested APIs for mobile apps and third parties, including token authentication, push notifications and rate limiting.'),
+                ['Sürümlü API', 'Bearer token', 'FCM push']],
+            ['cart', 'saas-abonelik',
+                $t('Çok kiracılı SaaS ve abonelik', 'Multi-tenant SaaS and subscriptions'),
+                $t('Paket, deneme süresi, yenileme ve iptal akışı; Türkiye’deki ödeme sağlayıcılarıyla 3D Secure entegrasyonu. Her kiracı yalnızca kendi verisini görür.', 'Plans, trials, renewals and cancellations, with 3D Secure integration for Turkish payment providers. Each tenant sees only its own data.'),
+                ['Çok kiracılı', 'PayTR · iyzico', '3D Secure']],
+            ['gauge', 'bakim-performans',
+                $t('Bakım, sürüm yükseltme ve performans', 'Maintenance, upgrades and performance'),
+                $t('Eski Laravel sürümlerinden güncele testlerle güvenceye alınmış kademeli geçiş. Yavaş sayfaların nedenini bulurum: N+1 sorgular, eksik indeksler, cache ve kuyruk fırsatları — yazılı raporla.', 'Step-by-step, test-backed upgrades from old Laravel versions, plus written reports on why pages are slow: N+1 queries, missing indexes, caching and queue opportunities.'),
+                ['Laravel 8 → 12', 'N+1 denetimi', 'Yük testi']],
         ];
-        foreach ($rows as $i => [$icon, $title, $desc, $tags]) {
-            Service::create(['icon' => $icon, 'title' => $title, 'description' => $desc, 'tags' => $tags, 'sort' => $i]);
+
+        foreach ($rows as $i => [$icon, $slug, $title, $desc, $tags]) {
+            Service::create([
+                'icon' => $icon,
+                'image' => $this->demoImage("services/{$slug}.jpg"),
+                'title' => $title,
+                'description' => $desc,
+                'tags' => $tags,
+                'sort' => $i,
+            ]);
         }
     }
 
@@ -175,8 +195,10 @@ class PortfolioSeeder extends Seeder
             ['bektasozcetin/filament-activity-timeline', $t('Filament kayıtlarına kim, neyi, ne zaman değiştirdi zaman çizelgesi ekleyen eklenti.', 'A Filament plugin that adds a who-changed-what-and-when timeline to any record.'), $t('Filament eklentisi', 'Filament plugin'), 96],
             ['bektasozcetin/laravel-starter', $t('Roller, Pest testleri, GitHub Actions ve Docker hazır gelen başlangıç şablonu.', 'A starter kit that ships with roles, Pest tests, GitHub Actions and Docker.'), $t('Şablon', 'Template'), 58],
         ];
+        // Kurgusal kayıtlar: gizli duruyorlar. Gerçek repolar yayınlanınca panelden
+        // "GitHub'dan eşitle" ile çekilip bunların yerini alacak.
         foreach ($rows as $i => [$name, $desc, $kind, $stars]) {
-            Repository::create(['name' => $name, 'description' => $desc, 'kind' => $kind, 'stars' => $stars, 'forks' => intdiv($stars, 7), 'pushed_at' => now()->subDays([3, 12, 27][$i] ?? 30), 'sort' => $i]);
+            Repository::create(['name' => $name, 'description' => $desc, 'kind' => $kind, 'stars' => $stars, 'forks' => intdiv($stars, 7), 'pushed_at' => now()->subDays([3, 12, 27][$i] ?? 30), 'sort' => $i, 'is_published' => false]);
         }
     }
 
@@ -184,7 +206,7 @@ class PortfolioSeeder extends Seeder
     {
         $t = fn ($tr, $en = null) => $this->t($tr, $en);
         $rows = [
-            [$t('2024 — Bugün', '2024 — Present'), 'Full Stack Laravel Developer', $t('Nexa Dijital · İzmir', 'Nexa Digital · İzmir'), $t('E-ticaret ve SaaS müşterileri için Laravel ve Livewire ile uçtan uca uygulamalar geliştiriyorum. API tasarımı, Filament panelleri ve GitHub Actions ile otomatik deploy süreçlerinden sorumluyum.', 'I build end-to-end Laravel and Livewire apps for e-commerce and SaaS clients, and own API design, Filament panels and automated deploys with GitHub Actions.'), ['Laravel', 'Livewire', 'Filament', 'Docker'], true],
+            [$t('2024 — Bugün', '2024 — Present'), 'Full Stack Laravel Developer', $t('Nexa Dijital · Ankara', 'Nexa Digital · Ankara'), $t('E-ticaret ve SaaS müşterileri için Laravel ve Livewire ile uçtan uca uygulamalar geliştiriyorum. API tasarımı, Filament panelleri ve GitHub Actions ile otomatik deploy süreçlerinden sorumluyum.', 'I build end-to-end Laravel and Livewire apps for e-commerce and SaaS clients, and own API design, Filament panels and automated deploys with GitHub Actions.'), ['Laravel', 'Livewire', 'Filament', 'Docker'], true],
             [$t('2022 — 2024'), 'Backend Developer', $t('Pazarium Teknoloji · Uzaktan', 'Pazarium Technology · Remote'), $t('Günde 15 binden fazla siparişi işleyen pazar yeri altyapısında REST API geliştirme, sorgu optimizasyonu ve kargo/ödeme entegrasyonları.', 'REST API development, query tuning and shipping/payment integrations for a marketplace handling 15,000+ orders a day.'), ['PHP', 'Laravel', 'MySQL', 'Redis'], false],
             [$t('2020 — 2022'), 'Freelance Web Developer', $t('Serbest', 'Independent'), $t('Küçük işletmeler için 20\'den fazla web sitesi, online mağaza ve yönetim paneli teslim ettim.', 'Delivered 20+ websites, online shops and admin panels for small businesses.'), ['Laravel', 'Blade', 'Tailwind'], false],
         ];
@@ -195,7 +217,7 @@ class PortfolioSeeder extends Seeder
         $edu = [
             [$t('Eğitim', 'Education'), $t('Bilgisayar Mühendisliği', 'Computer Engineering (BSc)'), $t('Dokuz Eylül Üniversitesi · 2020', 'Dokuz Eylül University · 2020')],
             [$t('Sertifika', 'Certificate'), $t('AWS Certified Cloud Practitioner'), $t('Amazon Web Services · 2023')],
-            [$t('Topluluk', 'Community'), $t('“Filament ile 10 dakikada admin panel” sunumu', 'Talk: “An admin panel in 10 minutes with Filament”'), $t('Laravel İzmir Meetup · 2024')],
+            [$t('Topluluk', 'Community'), $t('“Filament ile 10 dakikada admin panel” sunumu', 'Talk: “An admin panel in 10 minutes with Filament”'), $t('Laravel Ankara Meetup · 2024')],
         ];
         foreach ($edu as $i => [$kind, $title, $subtitle]) {
             Education::create(compact('kind', 'title', 'subtitle') + ['sort' => $i]);

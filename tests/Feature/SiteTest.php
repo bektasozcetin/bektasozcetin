@@ -39,20 +39,20 @@ class SiteTest extends TestCase
     {
         $this->get('/')->assertOk()->assertSee('Seçili')->assertSee('Birlikte çalıştığım markalar')->assertSee('storage/brands/pazarium.svg', false)->assertSee('hreflang="en"', false);
         $this->get('/en')->assertOk()->assertSee('Selected')->assertSee('Book a call');
-        $this->get('/projeler/atolye-market')->assertOk()->assertSee('Atölye Market');
-        $this->get('/en/projects/atolye-market')->assertOk()->assertSee('Checkout abandonment');
+        $this->get('/projeler/randevu-ajandam')->assertOk()->assertSee('Randevu Ajandam');
+        $this->get('/en/projects/arac-servis')->assertOk()->assertSee('the slowest is 207 ms');
         $this->get('/kvkk')->assertOk();
         $this->get('/en/privacy')->assertOk();
-        $this->get('/sitemap.xml')->assertOk()->assertSee('/en/projects/siradaki');
+        $this->get('/sitemap.xml')->assertOk()->assertSee('/en/projects/arac-servis');
         $this->get('/projeler/olmayan-proje')->assertNotFound();
     }
 
     public function test_unpublished_project_is_hidden(): void
     {
-        Project::where('slug', 'siradaki')->update(['is_published' => false]);
+        Project::where('slug', 'arac-servis')->update(['is_published' => false]);
 
-        $this->get('/')->assertDontSee('projeler/siradaki', false)->assertSee('projeler/atolye-market', false);
-        $this->get('/projeler/siradaki')->assertNotFound();
+        $this->get('/')->assertDontSee('projeler/arac-servis', false)->assertSee('projeler/randevu-ajandam', false);
+        $this->get('/projeler/arac-servis')->assertNotFound();
     }
 
     public function test_contact_form_stores_message_and_notifies(): void
@@ -127,16 +127,17 @@ class SiteTest extends TestCase
 
     public function test_project_gallery_next_and_view_counter(): void
     {
-        $project = Project::where('slug', 'atolye-market')->first();
+        $project = Project::where('slug', 'randevu-ajandam')->first();
         $before = $project->views;
 
-        $this->withHeader('User-Agent', 'Mozilla/5.0')->get('/projeler/atolye-market')
-            ->assertOk()->assertSee('projects/gallery/atolye-market-2.jpg', false)->assertSee('Sonraki proje')->assertSee('Teklif Masası');
-        $this->withHeader('User-Agent', 'Mozilla/5.0')->get('/projeler/atolye-market'); // aynı oturum: tekrar sayılmaz
+        $this->withHeader('User-Agent', 'Mozilla/5.0')->get('/projeler/randevu-ajandam')
+            ->assertOk()->assertSee('projects/gallery/randevu-ajandam-2.jpg', false)->assertSee('Sonraki proje')->assertSee('Araç Servis Yönetim Sistemi');
+        $this->withHeader('User-Agent', 'Mozilla/5.0')->get('/projeler/randevu-ajandam'); // aynı oturum: tekrar sayılmaz
         $this->assertSame($before + 1, $project->fresh()->views);
 
-        $this->withHeader('User-Agent', 'Googlebot/2.1')->post('/goruntulenme/teklif-masasi', [], ['X-CSRF-TOKEN' => csrf_token()]);
-        $this->assertSame(642, Project::where('slug', 'teklif-masasi')->first()->views); // botlar sayılmaz
+        $arac = Project::where('slug', 'arac-servis')->first();
+        $this->withHeader('User-Agent', 'Googlebot/2.1')->post('/goruntulenme/arac-servis', [], ['X-CSRF-TOKEN' => csrf_token()]);
+        $this->assertSame($arac->views, Project::where('slug', 'arac-servis')->first()->views); // botlar sayılmaz
     }
 
     public function test_cv_link_uses_uploaded_files(): void
@@ -216,6 +217,10 @@ class SiteTest extends TestCase
             ]),
         ]);
         Setting::put(['github_username' => 'ornek']);
+
+        // Seeder'daki kurgusal repolar gizli gelir. Panelden yayına alınmış bir
+        // repoyu taklit et: eşitleme bu bayrağa dokunmamalı.
+        \App\Models\Repository::where('name', 'bektasozcetin/laravel-iyzico')->update(['is_published' => true]);
 
         $result = \App\Support\GitHubSync::run();
         $this->assertSame(['created' => 1, 'updated' => 1, 'skipped' => 1], $result);
