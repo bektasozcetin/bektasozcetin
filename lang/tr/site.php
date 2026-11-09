@@ -12,6 +12,7 @@ return [
         'notes' => 'Notlar', 'work' => 'Projeler', 'services' => 'Hizmetler', 'skills' => 'Yetkinlikler', 'about' => 'Hakkımda', 'faq' => 'SSS',
         'code' => 'Kod vitrini', 'models' => 'Çalışma modelleri', 'contact' => 'İletişim',
         'quick' => 'Hızlı geçiş', 'menu' => 'Menü', 'menu_label' => 'Ana menü', 'close_menu' => 'Menüyü kapat', 'lang' => 'Dil',
+        'experience' => 'Deneyim', 'refs' => 'Referanslar',
         'to_dark' => 'Koyu temaya geç', 'to_light' => 'Açık temaya geç',
     ],
     'cta' => 'Görüşme planla',
@@ -211,6 +212,49 @@ return [
     ],
 
     'footer' => ['made' => 'Tüm hakları saklıdır', 'privacy' => 'KVKK aydınlatma metni', 'top' => 'Başa dön', 'whatsapp' => 'WhatsApp’tan yaz'],
+
+    'explore' => ['eyebrow' => '05 · DAHA FAZLASI', 'title_a' => 'Daha', 'title_b' => 'derine in', 'lede' => 'Hizmetler, yetkinlikler, çalışma modelleri ve sık sorulanlar kendi sayfalarında.'],
+    'pages' => [
+        'back' => 'Ana sayfa',
+        'cta_title' => 'Projeni konuşalım',
+        'cta_lede' => 'İlk görüşmede kapsamı ve takvimi birlikte netleştirelim.',
+
+        'services' => [
+            'title' => 'Hizmetler',
+            'description' => 'Randevu sistemleri, sektörel yönetim panelleri, kurumsal süreç uygulamaları, REST API ve mobil backend, çok kiracılı SaaS, bakım ve performans.',
+            'lede' => 'Laravel ile uçtan uca geliştirdiğim işler. Her biri gerçek projelerden çıktı; kapsamı ve teknik kararları birlikte netleştiriyoruz.',
+        ],
+        'skills' => [
+            'title' => 'Yetkinlikler',
+            'description' => 'Backend, arayüz, veritabanı ve DevOps tarafında kullandığım teknolojiler, deneyim süreleri ve örnek kod.',
+            'lede' => 'Hangi katmanda neyi ne kadar kullandığım ve nasıl kod yazdığım.',
+        ],
+        'about' => [
+            'title' => 'Hakkımda',
+            'description' => 'Ankara merkezli full stack Laravel geliştirici. Çalışma biçimim, önceliklerim ve bir projeye nereden başladığım.',
+            'lede' => 'Kısaca kimim, nasıl çalışırım ve bir işe nereden başlarım.',
+        ],
+        'experience' => [
+            'title' => 'Deneyim',
+            'description' => 'Çalıştığım yerler, üstlendiğim roller, eğitimim ve sertifikalarım.',
+            'lede' => 'Yol haritam: nerede ne yaptım, neyi öğrendim.',
+        ],
+        'pricing' => [
+            'title' => 'Çalışma modelleri',
+            'description' => 'Proje bazlı geliştirme, aylık bakım ve danışmanlık modelleri; kapsam ve fiyat aralıkları.',
+            'lede' => 'Kapsamı belli, sürprizsiz modeller. Hangisinin uyduğunu ilk görüşmede birlikte seçeriz.',
+        ],
+        'testimonials' => [
+            'title' => 'Referanslar',
+            'description' => 'Birlikte çalıştığım kişi ve ekiplerin değerlendirmeleri.',
+            'lede' => 'Birlikte çalıştığım ekiplerin söyledikleri.',
+        ],
+        'faq' => [
+            'title' => 'Sık sorulan sorular',
+            'description' => 'Süreç, fiyatlandırma, teslim ve bakım hakkında en çok sorulan sorular.',
+            'lede' => 'Projeye başlamadan önce en çok merak edilenler.',
+        ],
+    ],
 
     'palette' => [
         'cv' => 'CV indir (PDF)', 'notes_page' => 'Tüm notlar', 'book' => 'Takvimden saat seç',

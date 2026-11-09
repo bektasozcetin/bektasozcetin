@@ -1,9 +1,28 @@
 @php
     $home = localized_route('home');
-    $menuItems = [['projeler', 'work'], ['hizmetler', 'services'], ['yetkinlikler', 'skills'], ['kod', 'code'], ['hakkimda', 'about'], ['calisma', 'models'], ['notlar', 'notes'], ['sss', 'faq'], ['iletisim', 'contact']];
+    // Mobil menü: ana sayfa çapaları + config/nav.php'deki alt sayfalar.
+    $menuItems = collect([['url' => $home.'#projeler', 'label' => __('site.nav.work')]])
+        ->concat(collect(config('nav.pages'))->map(fn ($cfg, $name) => [
+            'url' => localized_route($name),
+            'label' => __('site.nav.'.$cfg['key']),
+        ])->values())
+        ->push(['url' => localized_route('posts.index'), 'label' => __('site.nav.notes')])
+        ->push(['url' => $home.'#iletisim', 'label' => __('site.nav.contact')])
+        ->values();
     $otherLocale = app()->getLocale() === 'en' ? 'tr' : 'en';
+    // Bölüm kimliği → hangi alt sayfada yaşıyor. Ana sayfada kalanlar (projeler,
+    // notlar, iletişim) haritada yok; onlar çapa olarak çalışmaya devam ediyor.
+    $sectionPage = [];
+    foreach (config('nav.pages') as $pageName => $pageCfg) {
+        foreach ($pageCfg['sections'] as $sectionId) {
+            $sectionPage[$sectionId] = $pageName;
+        }
+    }
+
     $paletteItems = collect(__('site.palette.sections'))
-        ->map(fn ($s) => ['type' => 'section', 'target' => $s[0], 'label' => $s[1], 'hint' => $s[2], 'icon' => $s[3], 'kind' => __('site.palette.section')])
+        ->map(fn ($s) => isset($sectionPage[$s[0]])
+            ? ['type' => 'link', 'target' => localized_route($sectionPage[$s[0]]), 'label' => $s[1], 'hint' => $s[2], 'icon' => $s[3], 'kind' => __('site.palette.section')]
+            : ['type' => 'section', 'target' => $s[0], 'label' => $s[1], 'hint' => $s[2], 'icon' => $s[3], 'kind' => __('site.palette.section')])
         ->push(booking_mode()
             ? ['type' => 'book', 'label' => __('site.cta'), 'hint' => __('site.palette.book'), 'icon' => '→', 'kind' => __('site.palette.action'), 'act' => true]
             : ['type' => 'section', 'target' => 'iletisim', 'label' => __('site.cta'), 'hint' => __('site.palette.to_contact'), 'icon' => '→', 'kind' => __('site.palette.action'), 'act' => true])
@@ -31,10 +50,10 @@
                 </button>
             </div>
             <nav class="flex flex-col" aria-label="{{ __('site.nav.menu_label') }}">
-                @foreach ($menuItems as $i => [$id, $key])
-                    <a class="menu-link" href="{{ $home }}#{{ $id }}" @click="menu = false">
+                @foreach ($menuItems as $i => $item)
+                    <a class="menu-link" href="{{ $item['url'] }}" @click="menu = false">
                         <span class="volt w-6 font-mono text-xs font-medium">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span>
-                        <span class="serif text-[32px] leading-[1.1] text-c0">{{ __('site.nav.'.$key) }}</span>
+                        <span class="serif text-[32px] leading-[1.1] text-c0">{{ $item['label'] }}</span>
                     </a>
                 @endforeach
             </nav>

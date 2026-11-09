@@ -1,6 +1,8 @@
 @php
-    $links = ['projeler' => 'work', 'hizmetler' => 'services', 'yetkinlikler' => 'skills', 'hakkimda' => 'about', 'sss' => 'faq'];
     $home = localized_route('home');
+    // Başlık menüsü dar: yalnızca üç alt sayfa. Kalanlar mobil menüde,
+    // komut paletinde ve ana sayfadaki "keşfet" bölümünde.
+    $links = ['services', 'skills', 'about'];
 @endphp
 <header class="glass fade-up sticky top-4 z-[5] flex items-center justify-between gap-2.5 rounded-full py-2 pr-2 pl-2.5">
     <a href="{{ $home }}#top" class="flex min-h-11 min-w-0 items-center gap-3 pr-2 no-underline">
@@ -14,8 +16,9 @@
     </a>
 
     <nav class="nav-desk items-center justify-end gap-0.5" aria-label="{{ __('site.nav.menu_label') }}">
-        @foreach ($links as $id => $key)
-            <a class="navlink" href="{{ $home }}#{{ $id }}">{{ __('site.nav.'.$key) }}</a>
+        <a class="navlink" href="{{ $home }}#projeler">{{ __('site.nav.work') }}</a>
+        @foreach ($links as $name)
+            <a class="navlink" href="{{ localized_route($name) }}" @if (request()->routeIs($name, 'en.'.$name)) aria-current="page" @endif>{{ __('site.nav.'.config('nav.pages.'.$name.'.key')) }}</a>
         @endforeach
         <a class="navlink" href="{{ localized_route('posts.index') }}" @if (request()->routeIs('posts.*', 'en.posts.*')) aria-current="page" @endif>{{ __('site.nav.notes') }}</a>
         @include('partials.lang-switch', ['class' => 'ml-1 border border-line p-[3px]'])

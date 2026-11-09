@@ -2,8 +2,7 @@
     @include('partials.sections.cover')
     @include('partials.sections.brands')
     @include('partials.sections.projects')
-    @include('partials.sections.services')
-    @include('partials.sections.about')
+    @include('partials.sections.sayfalar')
     @include('partials.sections.notes')
-    @include('partials.sections.contact')
+    @include('partials.sections.iletisim')
 </x-layouts.app>

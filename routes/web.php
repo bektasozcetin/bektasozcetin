@@ -4,6 +4,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FeedController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MeetingController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SitemapController;
@@ -15,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 | İngilizce: /en   /en/projects/{slug}  /en/notes(/{slug}) /en/privacy  POST /en/contact POST /en/meeting
 */
 $paths = [
-    'tr' => ['prefix' => '', 'name' => '', 'project' => 'projeler', 'notes' => 'notlar', 'privacy' => 'kvkk', 'contact' => 'iletisim', 'meeting' => 'gorusme'],
-    'en' => ['prefix' => 'en', 'name' => 'en.', 'project' => 'projects', 'notes' => 'notes', 'privacy' => 'privacy', 'contact' => 'contact', 'meeting' => 'meeting'],
+    'tr' => ['locale' => 'tr', 'prefix' => '', 'name' => '', 'project' => 'projeler', 'notes' => 'notlar', 'privacy' => 'kvkk', 'contact' => 'iletisim', 'meeting' => 'gorusme'],
+    'en' => ['locale' => 'en', 'prefix' => 'en', 'name' => 'en.', 'project' => 'projects', 'notes' => 'notes', 'privacy' => 'privacy', 'contact' => 'contact', 'meeting' => 'meeting'],
 ];
 
 foreach ($paths as $locale => $p) {
@@ -25,6 +26,14 @@ foreach ($paths as $locale => $p) {
         ->middleware('locale:'.$locale)
         ->group(function () use ($p) {
             Route::get('/', HomeController::class)->name('home');
+
+            // Alt sayfalar: config/nav.php tek doğruluk kaynağı.
+            foreach (config('nav.pages') as $page => $cfg) {
+                // Sayfa adı rota adından okunuyor; route defaults kullanılsaydı
+                // route() üretilen adreslere ?page=... diye eklerdi.
+                Route::get($cfg['slug'][$p['locale']], [PageController::class, 'show'])->name($page);
+            }
+
             Route::get($p['project'].'/{project:slug}', ProjectController::class)->name('projects.show');
             Route::get($p['notes'], [PostController::class, 'index'])->name('posts.index');
             Route::get($p['notes'].'/{post:slug}', [PostController::class, 'show'])->name('posts.show');

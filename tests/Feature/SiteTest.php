@@ -199,12 +199,37 @@ class SiteTest extends TestCase
         $this->assertAuthenticated();
     }
 
-    public function test_skills_stack_on_home_page(): void
+    public function test_skills_stack_on_skills_page(): void
     {
-        $this->get('/')->assertOk()->assertSee('Teknoloji')->assertSee('PHP 8.3')->assertSee('aria-valuenow="95"', false);
+        $this->get('/yetkinlikler')->assertOk()->assertSee('Teknoloji')->assertSee('PHP 8.3')->assertSee('aria-valuenow="95"', false);
         \App\Models\Skill::where('name', 'Figma')->update(['is_published' => false]);
-        $this->get('/')->assertDontSee('Figma');
-        $this->get('/en')->assertSee('Tech')->assertSee('Core expertise');
+        $this->get('/yetkinlikler')->assertDontSee('Figma');
+        $this->get('/en/skills')->assertSee('Tech')->assertSee('Core expertise');
+    }
+
+    public function test_split_pages_render_in_both_languages(): void
+    {
+        $sayfalar = [
+            'hizmetler' => 'services', 'yetkinlikler' => 'skills', 'hakkimda' => 'about',
+            'deneyim' => 'experience', 'fiyatlar' => 'pricing', 'referanslar' => 'testimonials', 'sss' => 'faq',
+        ];
+
+        foreach ($sayfalar as $tr => $en) {
+            $this->get('/'.$tr)->assertOk()
+                ->assertSee(__('site.pages.'.$en.'.title'))  // <title> ve sekme adı
+                ->assertSee('<h1', false)                    // her sayfada tek başlık
+                ->assertSee('/en/'.$en, false);              // hreflang karşılığı
+            $this->get('/en/'.$en)->assertOk();
+        }
+
+        // Ana sayfa artık yalnızca vitrin: derin bölümler kendi adreslerinde.
+        $this->get('/')->assertOk()
+            ->assertSee('id="kesfet"', false)
+            ->assertDontSee('id="yetkinlikler"', false)
+            ->assertDontSee('id="calisma"', false);
+
+        // Site haritası yeni sayfaları içeriyor.
+        $this->get('/sitemap.xml')->assertOk()->assertSee('/hizmetler')->assertSee('/en/faq');
     }
 
     public function test_github_sync_updates_and_adds_repositories(): void

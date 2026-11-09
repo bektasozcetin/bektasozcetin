@@ -12,6 +12,7 @@ return [
         'notes' => 'Notes', 'work' => 'Work', 'services' => 'Services', 'skills' => 'Skills', 'about' => 'About', 'faq' => 'FAQ',
         'code' => 'Code', 'models' => 'Ways to work', 'contact' => 'Contact',
         'quick' => 'Quick jump', 'menu' => 'Menu', 'menu_label' => 'Main menu', 'close_menu' => 'Close menu', 'lang' => 'Language',
+        'experience' => 'Experience', 'refs' => 'References',
         'to_dark' => 'Switch to dark theme', 'to_light' => 'Switch to light theme',
     ],
     'cta' => 'Book a call',
@@ -211,6 +212,49 @@ return [
     ],
 
     'footer' => ['made' => 'All rights reserved', 'privacy' => 'Privacy notice', 'top' => 'Back to top', 'whatsapp' => 'Message on WhatsApp'],
+
+    'explore' => ['eyebrow' => '05 · MORE', 'title_a' => 'Go', 'title_b' => 'deeper', 'lede' => 'Services, skills, ways to work and FAQs each live on their own page.'],
+    'pages' => [
+        'back' => 'Home',
+        'cta_title' => 'Let’s talk about your project',
+        'cta_lede' => 'We’ll agree on the scope and the timeline in the first call.',
+
+        'services' => [
+            'title' => 'Services',
+            'description' => 'Booking systems, industry management panels, enterprise process applications, REST APIs and mobile backends, multi-tenant SaaS, maintenance and performance.',
+            'lede' => 'What I build end to end with Laravel. Each one grew out of a real project; we agree on scope and technical decisions together.',
+        ],
+        'skills' => [
+            'title' => 'Skills',
+            'description' => 'The technologies I use across backend, frontend, databases and DevOps, how long I have used them, and sample code.',
+            'lede' => 'What I use at each layer, how much, and how I write code.',
+        ],
+        'about' => [
+            'title' => 'About',
+            'description' => 'Full stack Laravel developer based in Ankara. How I work, what I prioritise and where I start on a project.',
+            'lede' => 'Who I am in short, how I work and where I start.',
+        ],
+        'experience' => [
+            'title' => 'Experience',
+            'description' => 'Where I have worked, the roles I held, my education and certificates.',
+            'lede' => 'My road so far: where I worked and what I learned.',
+        ],
+        'pricing' => [
+            'title' => 'Ways to work',
+            'description' => 'Project-based development, monthly maintenance and consulting models, with scope and price ranges.',
+            'lede' => 'Clear scope, no surprises. We pick the right model together in the first call.',
+        ],
+        'testimonials' => [
+            'title' => 'References',
+            'description' => 'What the people and teams I worked with have to say.',
+            'lede' => 'What the teams I worked with have to say.',
+        ],
+        'faq' => [
+            'title' => 'Frequently asked questions',
+            'description' => 'The most common questions about process, pricing, delivery and maintenance.',
+            'lede' => 'What people ask most before starting a project.',
+        ],
+    ],
 
     'palette' => [
         'cv' => 'Download CV (PDF)', 'notes_page' => 'All notes', 'book' => 'Pick a time',

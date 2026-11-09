@@ -16,6 +16,11 @@ class SitemapController extends Controller
 
         foreach (['tr', 'en'] as $locale) {
             $urls[] = localized_route('home', [], $locale);
+
+            foreach (array_keys(config('nav.pages')) as $page) {
+                $urls[] = localized_route($page, [], $locale);
+            }
+
             $urls[] = localized_route('privacy', [], $locale);
             foreach ($projects as $project) {
                 $urls[] = localized_route('projects.show', $project, $locale);

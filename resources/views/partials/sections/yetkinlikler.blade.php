@@ -1,32 +1,5 @@
-<section id="hizmetler" class="flex flex-col gap-11">
-    <x-section-head :eyebrow="__('site.services.eyebrow')" :a="__('site.services.title_a')" :b="__('site.services.title_b')" :lede="__('site.services.lede')" />
-    <div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,340px),1fr))] gap-[18px]">
-        @foreach ($services as $i => $service)
-            <article class="card spot svc reveal flex flex-col gap-4 rounded-[30px] p-7">
-                @if ($service->image)
-                    <div class="relative -mx-1 -mt-1 overflow-hidden rounded-[22px] border border-line-soft">
-                        <img src="{{ asset('storage/'.$service->image) }}" alt="" loading="lazy" decoding="async" width="1200" height="750" class="photo-grade block aspect-[16/10] w-full object-cover">
-                        <span class="photo-tint"></span>
-                    </div>
-                @endif
-                <div class="flex items-start justify-between gap-3">
-                    <span class="svc-ico inline-flex h-[52px] w-[52px] items-center justify-center rounded-2xl border border-line-strong bg-line-soft">
-                        <x-ico :name="$service->icon" :size="24" :stroke="1.7" />
-                    </span>
-                    <span class="serif text-[40px] leading-none text-[rgba(var(--w),0.14)]">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span>
-                </div>
-                <h3 class="h3">{{ $service->t('title') }}</h3>
-                <p class="m-0 flex-1 text-c4">{{ $service->t('description') }}</p>
-                <div class="flex flex-wrap gap-1.5">
-                    @foreach ($service->tags ?? [] as $tag)<span class="chip">{{ $tag }}</span>@endforeach
-                </div>
-            </article>
-        @endforeach
-    </div>
-</section>
-
 <section id="yetkinlikler" class="flex flex-col gap-12">
-    <x-section-head :eyebrow="__('site.skills.eyebrow')" :a="__('site.skills.title_a')" :b="__('site.skills.title_b')" :lede="__('site.skills.lede')" />
+    <x-section-head :level="$headLevel ?? 'h2'" :eyebrow="__('site.skills.eyebrow')" :a="__('site.skills.title_a')" :b="__('site.skills.title_b')" :lede="__('site.skills.lede')" />
     <div class="bento">
         <article class="card spot reveal s7 flex flex-col gap-[26px] overflow-hidden rounded-[32px] p-[34px]">
             <div aria-hidden="true" class="absolute -top-[140px] -right-[100px] -z-10 h-[360px] w-[360px] rounded-full bg-[radial-gradient(circle,var(--vg),transparent_65%)] blur-[30px]"></div>
@@ -177,43 +150,4 @@
             </div>
         </div>
     @endif
-</section>
-
-<section id="kod" class="flex flex-col gap-10" x-data="{ tab: 'action' }">
-    <x-section-head :eyebrow="__('site.code.eyebrow')" :a="__('site.code.title_a')" :b="__('site.code.title_b')">
-        <x-slot:below><p class="lede max-w-[50ch]">{{ __('site.code.lede') }}</p></x-slot:below>
-        <div role="group" aria-label="{{ __('site.code.label') }}" class="seg-group card flex gap-1 rounded-full p-[5px]">
-            @foreach (config('showcase') as $key => $sample)
-                <button type="button" class="seg-btn" @click="tab = '{{ $key }}'" :aria-pressed="(tab === '{{ $key }}').toString()">{{ $sample['label'] }}</button>
-            @endforeach
-        </div>
-    </x-section-head>
-
-    <div class="reveal">
-    @foreach (config('showcase') as $key => $sample)
-        <div class="flex flex-wrap items-stretch gap-[18px]" x-show="tab === '{{ $key }}'" @if (! $loop->first) x-cloak @endif>
-            <div class="card relative min-w-0 flex-[999_1_640px] overflow-hidden rounded-[30px]" aria-live="polite">
-                <div class="flex items-center gap-2 border-b border-line-soft px-5 py-3.5">
-                    <span class="h-3 w-3 rounded-full bg-accent shadow-[0_0_10px_var(--vg)]"></span><span class="h-3 w-3 rounded-full bg-[rgba(var(--w),0.22)]"></span><span class="h-3 w-3 rounded-full bg-[rgba(var(--w),0.12)]"></span>
-                    <span class="ml-3 font-mono text-xs font-medium text-c4">{{ $sample['file'] }}</span>
-                </div>
-                <div class="overflow-x-auto px-5 pt-5 pb-[26px] font-mono text-[13.5px] leading-[1.85]">
-                    @foreach ($sample['lines'] as $n => $line)
-                        @php $text = $line[0]; $hi = $line[1] ?? false; @endphp
-                        <div class="codeline tline" style="animation-delay: {{ $n * 0.03 }}s"><span class="text-[#55575E] select-none">{{ $n + 1 }}</span><span @class(['text-accent-soft' => $hi, 'text-c5' => ! $hi && str_starts_with(trim($text), '//'), 'text-c2' => ! $hi && ! str_starts_with(trim($text), '//')])>{{ $text === '' ? ' ' : $text }}</span></div>
-                    @endforeach
-                </div>
-            </div>
-            <div class="card flex min-w-0 flex-[1_1_320px] flex-col gap-4 rounded-[30px] p-[26px]">
-                <span class="lbl volt">{{ __('site.code.why') }}</span>
-                <h3 class="h3">{{ __('site.code.samples.'.$key.'.title') }}</h3>
-                <ul class="m-0 flex list-none flex-col gap-3.5 p-0">
-                    @foreach (__('site.code.samples.'.$key.'.notes') as $note)
-                        <li class="flex gap-3 text-[15px] text-c2"><span class="vdot mt-2"></span>{{ $note }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
-    @endforeach
-    </div>
 </section>
