@@ -38,6 +38,8 @@ Alpine.data('site', () => ({
     booking: false,
     consent: null,
     toast: '',
+    // Sayfa bir ekran boyu kaydırılınca "başa dön" düğmesi belirir.
+    scrolled: false,
     cases: Object.fromEntries((data.cases || []).map((c) => [c.slug, c])),
 
     get themeLabel() {
@@ -51,6 +53,11 @@ Alpine.data('site', () => ({
     },
 
     init() {
+        // "Başa dön" düğmesi: bir ekran boyu aşağı inilince görünür.
+        const izle = () => { this.scrolled = window.scrollY > window.innerHeight * 0.8; };
+        window.addEventListener('scroll', izle, { passive: true });
+        izle();
+
         // Adres #proje-slug ile açılırsa vaka penceresini aç; geri tuşu pencereyi kapatsın.
         const open = () => {
             const slug = decodeURIComponent(location.hash.replace('#vaka-', ''));

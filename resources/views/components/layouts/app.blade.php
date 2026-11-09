@@ -40,7 +40,9 @@
         (function () {
             var t = null;
             try { t = localStorage.getItem('theme'); } catch (e) {}
-            if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+            // Varsayılan koyu tema: işletim sistemi açık moddaysa bile koyu başlar.
+            // Ziyaretçi düğmeyle seçim yaparsa tercihi localStorage'da saklanır.
+            if (!t) t = 'dark';
             document.documentElement.className = 'theme-' + t;
         })();
     </script>
@@ -89,6 +91,8 @@
             @include('partials.footer')
         </div>
     </div>
+
+    @include('partials.floating')
 
     @if ($analytics === 'ga4' && setting('ga_id'))
         <div x-show="showConsent" x-cloak x-transition.opacity class="glass fixed bottom-4 left-4 z-30 flex max-w-[min(440px,calc(100vw-32px))] flex-col gap-3.5 rounded-[24px] p-5" role="dialog" aria-label="{{ __('site.consent.more') }}">

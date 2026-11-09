@@ -210,7 +210,7 @@ return [
         'accept' => 'İzin ver', 'decline' => 'Reddet', 'more' => 'Ayrıntılar',
     ],
 
-    'footer' => ['made' => 'Laravel + Tailwind CSS ile yapıldı', 'privacy' => 'KVKK aydınlatma metni', 'top' => 'Başa dön ↑'],
+    'footer' => ['made' => 'Tüm hakları saklıdır', 'privacy' => 'KVKK aydınlatma metni', 'top' => 'Başa dön', 'whatsapp' => 'WhatsApp’tan yaz'],
 
     'palette' => [
         'cv' => 'CV indir (PDF)', 'notes_page' => 'Tüm notlar', 'book' => 'Takvimden saat seç',

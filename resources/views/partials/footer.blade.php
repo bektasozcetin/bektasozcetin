@@ -5,7 +5,7 @@
         <div class="flex flex-wrap items-center gap-1.5">
             <a class="navlink [font:inherit]" href="{{ localized_route('privacy') }}">{{ __('site.footer.privacy') }}</a>
             @include('partials.lang-switch', ['class' => 'border border-line p-[3px]'])
-            <a class="navlink [font:inherit]" href="#top">{{ __('site.footer.top') }}</a>
+            {{-- "Başa dön" artık sağ altta sabit duran düğmede: partials/floating --}}
         </div>
     </div>
 </footer>

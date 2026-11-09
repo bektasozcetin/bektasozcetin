@@ -16,6 +16,10 @@ return [
     'available' => (bool) env('SITE_AVAILABLE', true),
     'cv_url' => env('SITE_CV_URL'),
 
+    // Uluslararası biçimde, yalnızca rakam: 905319912427. Boş bırakılırsa
+    // WhatsApp düğmesi hiç görünmez.
+    'whatsapp' => preg_replace('/\D/', '', (string) env('SITE_WHATSAPP')) ?: null,
+
     'social' => [
         'GitHub' => env('SITE_GITHUB_URL'),
         'LinkedIn' => env('SITE_LINKEDIN_URL'),

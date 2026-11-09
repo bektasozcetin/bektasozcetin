@@ -210,7 +210,7 @@ return [
         'accept' => 'Allow', 'decline' => 'Decline', 'more' => 'Details',
     ],
 
-    'footer' => ['made' => 'Built with Laravel + Tailwind CSS', 'privacy' => 'Privacy notice', 'top' => 'Back to top ↑'],
+    'footer' => ['made' => 'All rights reserved', 'privacy' => 'Privacy notice', 'top' => 'Back to top', 'whatsapp' => 'Message on WhatsApp'],
 
     'palette' => [
         'cv' => 'Download CV (PDF)', 'notes_page' => 'All notes', 'book' => 'Pick a time',
