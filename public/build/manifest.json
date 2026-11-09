@@ -1,0 +1,35 @@
+{
+  "resources/css/admin-login.css": {
+    "file": "assets/admin-login-DfE8GaeD.css",
+    "src": "resources/css/admin-login.css",
+    "isEntry": true,
+    "name": "admin-login",
+    "names": [
+      "admin-login.css"
+    ]
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-DMfRoEkq.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/css/filament/admin/theme.css": {
+    "file": "assets/theme-Cf48ww9A.css",
+    "src": "resources/css/filament/admin/theme.css",
+    "isEntry": true,
+    "name": "theme",
+    "names": [
+      "theme.css"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-mVfctPg4.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  }
+}
