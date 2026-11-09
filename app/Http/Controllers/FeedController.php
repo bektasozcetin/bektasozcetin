@@ -23,7 +23,7 @@ class FeedController extends Controller
 
         $xml = '<?xml version="1.0" encoding="UTF-8"?>'
             .'<rss version="2.0"><channel>'
-            .'<title>bektas.dev · Notlar</title>'
+            .'<title>bektasozcetin.com · Notlar</title>'
             .'<link>'.e(localized_route('posts.index')).'</link>'
             .'<description>'.e(__('site.notes.index_lede')).'</description>'
             .'<language>tr</language>'

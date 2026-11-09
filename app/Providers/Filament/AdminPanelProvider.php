@@ -29,7 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login(Login::class)
-            ->brandName('bektas.dev')
+            ->brandName('bektasozcetin.com')
             ->brandLogo(fn () => view('filament.brand'))
             ->brandLogoHeight('2.4rem')
             ->favicon(asset('favicon.svg'))

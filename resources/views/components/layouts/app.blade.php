@@ -28,11 +28,11 @@
     <meta property="og:image" content="{{ $ogImage }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:site_name" content="bektas.dev">
+    <meta property="og:site_name" content="bektasozcetin.com">
     <meta property="og:locale" content="{{ $locale === 'en' ? 'en_US' : 'tr_TR' }}">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="{{ $ogImage }}">
-    <link rel="alternate" type="application/rss+xml" title="bektas.dev" href="{{ url('feed.xml') }}">
+    <link rel="alternate" type="application/rss+xml" title="bektasozcetin.com" href="{{ url('feed.xml') }}">
     <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
 
     {{-- Tema: sayfa çizilmeden önce uygulanır, yanıp sönme olmaz --}}

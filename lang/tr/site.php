@@ -235,6 +235,6 @@ return [
 
     'privacy' => [
         'title' => 'KVKK Aydınlatma Metni',
-        'body' => 'Bu metin, 6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında veri sorumlusu Bektaş Özçetin tarafından hazırlanmıştır. İletişim formu ya da görüşme takvimi aracılığıyla paylaştığın ad, e-posta adresi, mesaj ve görüşme zamanı yalnızca talebine dönüş yapmak amacıyla işlenir, üçüncü kişilerle paylaşılmaz ve en fazla 12 ay saklanır. KVKK\'nın 11. maddesindeki haklarını kullanmak için merhaba@bektas.dev adresine yazabilirsin. Site, ziyaretleri kişisel veri tutmadan yalnızca sayı olarak kaydeder; Google Analytics etkinse analitik çerezler ancak onay verirsen çalışır.',
+        'body' => 'Bu metin, 6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında veri sorumlusu Bektaş Özçetin tarafından hazırlanmıştır. İletişim formu ya da görüşme takvimi aracılığıyla paylaştığın ad, e-posta adresi, mesaj ve görüşme zamanı yalnızca talebine dönüş yapmak amacıyla işlenir, üçüncü kişilerle paylaşılmaz ve en fazla 12 ay saklanır. KVKK\'nın 11. maddesindeki haklarını kullanmak için :email adresine yazabilirsin. Site, ziyaretleri kişisel veri tutmadan yalnızca sayı olarak kaydeder; Google Analytics etkinse analitik çerezler ancak onay verirsen çalışır.',
     ],
 ];

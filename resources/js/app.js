@@ -370,8 +370,8 @@ Alpine.data('bookingForm', (cfg) => ({
         const end = new Date(start.getTime() + this.duration * 60000);
         const stamp = (d) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
         const ics = [
-            'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//bektas.dev//booking//TR', 'BEGIN:VEVENT',
-            'UID:' + stamp(start) + '-' + Math.random().toString(36).slice(2) + '@bektas.dev',
+            'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//bektasozcetin.com//booking//TR', 'BEGIN:VEVENT',
+            'UID:' + stamp(start) + '-' + Math.random().toString(36).slice(2) + '@bektasozcetin.com',
             'DTSTAMP:' + stamp(new Date()), 'DTSTART:' + stamp(start), 'DTEND:' + stamp(end),
             'SUMMARY:' + cfg.title, 'END:VEVENT', 'END:VCALENDAR',
         ].join('\r\n');

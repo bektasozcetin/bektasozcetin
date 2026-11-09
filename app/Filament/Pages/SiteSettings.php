@@ -79,7 +79,7 @@ class SiteSettings extends Page
                     'plausible' => 'Plausible: çerezsiz, KVKK için onay bandı gerekmez',
                     'ga4' => 'Google Analytics 4: çerez kullanır, ziyaretçiye onay bandı gösterilir',
                 ]),
-                TextInput::make('plausible_domain')->label('Plausible alan adı')->placeholder('bektas.dev')
+                TextInput::make('plausible_domain')->label('Plausible alan adı')->placeholder('bektasozcetin.com')
                     ->visible(fn (Get $get) => $get('analytics_provider') === 'plausible')->required(fn (Get $get) => $get('analytics_provider') === 'plausible'),
                 TextInput::make('plausible_src')->label('Plausible betik adresi')->url()
                     ->visible(fn (Get $get) => $get('analytics_provider') === 'plausible'),

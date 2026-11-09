@@ -1,4 +1,4 @@
-# bektas.dev
+# bektasozcetin.com
 
 Bektaş Özçetin'in kişisel portfolyo sitesi: iki dilli (TR/EN), içeriği tamamen yönetim panelinden düzenlenen, vaka çalışmaları, notlar (blog) ve site içi görüşme takvimi olan bir Laravel uygulaması.
 

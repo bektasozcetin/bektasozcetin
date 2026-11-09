@@ -235,6 +235,6 @@ return [
 
     'privacy' => [
         'title' => 'Privacy Notice',
-        'body' => 'This notice is provided by Bektaş Özçetin as data controller under Turkey\'s Personal Data Protection Law (KVKK, No. 6698). The name, email address, message and meeting time you share through the contact form or booking calendar are processed only to reply to your request, are never shared with third parties and are kept for at most 12 months. To exercise your rights under Article 11 of the law, write to merhaba@bektas.dev. The site counts visits as plain numbers without storing personal data; if Google Analytics is enabled, analytics cookies only run with your consent.',
+        'body' => 'This notice is provided by Bektaş Özçetin as data controller under Turkey\'s Personal Data Protection Law (KVKK, No. 6698). The name, email address, message and meeting time you share through the contact form or booking calendar are processed only to reply to your request, are never shared with third parties and are kept for at most 12 months. To exercise your rights under Article 11 of the law, write to :email. The site counts visits as plain numbers without storing personal data; if Google Analytics is enabled, analytics cookies only run with your consent.',
     ],
 ];

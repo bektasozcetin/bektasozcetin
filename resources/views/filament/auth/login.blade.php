@@ -15,7 +15,7 @@
 
         <a href="{{ url('/') }}" class="bk-logo" tabindex="-1">
             <span class="bk-logo-ring"><img src="{{ asset('images/portrait.jpg') }}" alt="" width="36" height="36"></span>
-            <span>bektas<span class="bk-serif bk-blue">.dev</span></span>
+            <span>bektasozcetin<span class="bk-serif bk-blue">.com</span></span>
         </a>
 
         <div class="bk-brand-body">
@@ -38,14 +38,14 @@
         <div class="bk-brand-foot">
             <span class="bk-live"></span>Türkiye saatiyle <b x-data="{ t: '' }" x-init="const f = () => t = new Intl.DateTimeFormat('tr-TR', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Istanbul' }).format(new Date()); f(); setInterval(f, 30000)" x-text="t"></b>
         </div>
-        <div class="bk-wordmark">@foreach (mb_str_split('bektas.dev') as $i => $ch)<span style="--d: {{ 0.3 + $i * 0.05 }}s">{{ $ch }}</span>@endforeach</div>
+        <div class="bk-wordmark">@foreach (mb_str_split('bektasozcetin.com') as $i => $ch)<span style="--d: {{ 0.3 + $i * 0.05 }}s">{{ $ch }}</span>@endforeach</div>
     </aside>
 
     {{-- Sağ: giriş kartı --}}
     <section class="bk-panel">
         <a href="{{ url('/') }}" class="bk-logo bk-logo-mobile">
             <span class="bk-logo-ring"><img src="{{ asset('images/portrait.jpg') }}" alt="" width="36" height="36"></span>
-            <span>bektas<span class="bk-serif bk-blue">.dev</span></span>
+            <span>bektasozcetin<span class="bk-serif bk-blue">.com</span></span>
         </a>
 
         <div class="bk-card bk-spot">

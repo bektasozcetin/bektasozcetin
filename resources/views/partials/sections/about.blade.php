@@ -40,7 +40,7 @@
                 @endforeach
             </dl>
             <div aria-hidden="true" class="flex items-center justify-between font-mono text-[11px] tracking-[.14em] text-c5">
-                <span>BEKTAS<span class="volt">.</span>DEV</span>
+                <span>BEKTASOZCETIN<span class="volt">.</span>COM</span>
             </div>
             </div>
         </div>

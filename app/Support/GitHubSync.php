@@ -36,7 +36,7 @@ class GitHubSync
             throw new RuntimeException('GitHub kullanıcı adı ayarlı değil (Site ayarları → GitHub).');
         }
 
-        $response = Http::withHeaders(['Accept' => 'application/vnd.github+json', 'User-Agent' => 'bektas.dev-portfolio'])
+        $response = Http::withHeaders(['Accept' => 'application/vnd.github+json', 'User-Agent' => 'bektasozcetin.com-portfolio'])
             ->timeout(15)
             ->get("https://api.github.com/users/{$username}/repos", ['per_page' => 100, 'sort' => 'pushed', 'type' => 'owner']);
 

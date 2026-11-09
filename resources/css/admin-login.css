@@ -69,7 +69,7 @@
 .bk-brand-foot b { color: var(--bk-c0); font-weight: 500; font-variant-numeric: tabular-nums; }
 .bk-live { width: 8px; height: 8px; border-radius: 999px; background: var(--bk-v2); box-shadow: 0 0 0 4px var(--bk-vf); animation: bk-pulse 2.4s ease-in-out infinite; }
 @keyframes bk-pulse { 50% { box-shadow: 0 0 0 8px rgba(47, 107, 255, 0); } }
-.bk-wordmark { position: absolute; left: -6px; bottom: -0.2em; z-index: 0; font-size: clamp(90px, 10vw, 160px); font-weight: 800; letter-spacing: -0.07em; line-height: 1; white-space: nowrap; color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.07); pointer-events: none; user-select: none; }
+.bk-wordmark { position: absolute; left: -6px; bottom: -0.2em; z-index: 0; font-size: clamp(48px, 6vw, 96px); font-weight: 800; letter-spacing: -0.07em; line-height: 1; white-space: nowrap; color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.07); pointer-events: none; user-select: none; }
 
 /* ---------- Sağ: kart ---------- */
 .bk-panel { position: relative; flex: 1; min-width: 0; min-height: 100%; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; padding: 40px 24px; }

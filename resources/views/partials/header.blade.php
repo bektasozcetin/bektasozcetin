@@ -3,11 +3,14 @@
     $home = localized_route('home');
 @endphp
 <header class="glass fade-up sticky top-4 z-[5] flex items-center justify-between gap-2.5 rounded-full py-2 pr-2 pl-2.5">
-    <a href="{{ $home }}#top" class="flex min-h-11 items-center gap-3 pr-2 no-underline">
+    <a href="{{ $home }}#top" class="flex min-h-11 min-w-0 items-center gap-3 pr-2 no-underline">
         <span class="inline-flex h-10 w-10 rounded-full bg-[conic-gradient(from_200deg,var(--c5),var(--c0),var(--v),var(--c0),var(--c5))] p-0.5">
             <img src="{{ asset('images/portrait.jpg') }}" alt="" width="36" height="36" class="block h-full w-full rounded-full object-cover object-[50%_28%]">
         </span>
-        <span class="font-display text-base font-semibold tracking-[-0.02em]">bektas<span class="serif volt text-[19px]">.dev</span></span>
+        {{-- Alan adı 17 karakter; dar telefonlarda üç noktayla kesilmesin diye
+             kademeli küçülüyor. truncate yalnızca son çare. --}}
+        {{-- Telefonda yalnızca avatar; tablet ve üstünde ad yazılır. --}}
+        <span class="hidden truncate font-display text-base font-semibold tracking-[-0.02em] md:inline">Bektaş <span class="serif volt text-[19px]">Özçetin</span></span>
     </a>
 
     <nav class="nav-desk items-center justify-end gap-0.5" aria-label="{{ __('site.nav.menu_label') }}">
@@ -26,7 +29,7 @@
         <a class="btn btn-primary btn-sm ml-1.5" href="{{ $home }}#iletisim" @click="book($event)">{{ __('site.cta') }}</a>
     </nav>
 
-    <div class="nav-mob items-center gap-1.5">
+    <div class="nav-mob shrink-0 items-center gap-1.5">
         <button type="button" class="navlink w-11 cursor-pointer justify-center border border-line bg-fill-soft p-0" @click="toggleTheme" :aria-label="themeLabel">
             <x-ico name="sun" x-show="theme === 'dark'" />
             <x-ico name="moon" x-show="theme === 'light'" x-cloak />
